@@ -39,6 +39,9 @@ export class PublicComponent implements OnInit {
   get password() {
     return this.signInForm.get('password');
   }
+  signOut() {
+    return this.auth.signOut();
+  }
   signIn() {
     return this.auth
       .emailSignIn(this.email.value, this.password.value)

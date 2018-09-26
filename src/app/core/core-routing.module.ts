@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminGuard } from './services/auth/admin.guard';
+import { OfficeGuard } from '@app/core/services/auth/office.guard';
+import { TeacherGuard } from '@app/core/services/auth/teacher.guard';
+import { StudentGuard } from '@app/core/services/auth/student.guard';
 
 const routes: Routes = [
   {
@@ -14,22 +17,22 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    //canActivate: [AdminGuard],
+    canActivate: [AdminGuard],
     loadChildren: '../admin/admin.module#AdminModule'
   },
   {
     path: 'office',
-    //canActivate: [AdminGuard],
+    canActivate: [OfficeGuard],
     loadChildren: '../office/office.module#OfficeModule'
   },
   {
     path: 'teacher',
-    //canActivate: [AdminGuard],
+    canActivate: [TeacherGuard],
     loadChildren: '../teacher/teacher.module#TeacherModule'
   },
   {
     path: 'student',
-    //canActivate: [AdminGuard],
+    canActivate: [StudentGuard],
     loadChildren: '../student/student.module#StudentModule'
   }
 ];

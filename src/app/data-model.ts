@@ -12,8 +12,10 @@ export class Author {
 
 export interface Roles {
     subscriber?: boolean;
-    owner?: boolean;
     admin?: boolean;
+    office?: boolean;
+    teacher?: boolean;
+    student?: boolean;
 }
 
 export interface User {

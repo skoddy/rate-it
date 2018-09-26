@@ -77,7 +77,7 @@ export class AuthService {
   createUserWithEmailAndPassword(email: string, password: string) {
     return this.afAuth.auth
     .createUserWithEmailAndPassword(email, password)
-    .then((credential)=> {
+    .then((credential) => {
       this.updateUserData(credential.user);
     });
   }
@@ -138,7 +138,7 @@ export class AuthService {
     const allowed = ['admin', 'editor'];
     return this.checkAuthorization(user, allowed);
   }
-  
+
   canDelete(user: User): boolean {
     const allowed = ['admin'];
     return this.checkAuthorization(user, allowed);

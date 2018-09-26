@@ -7,6 +7,9 @@ import { AdminGuard } from '@app/core/services/auth/admin.guard';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { OfficeGuard } from '@app/core/services/auth/office.guard';
+import { TeacherGuard } from '@app/core/services/auth/teacher.guard';
+import { StudentGuard } from '@app/core/services/auth/student.guard';
 
 @NgModule({
   imports: [
@@ -21,6 +24,9 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
   declarations: [],
   providers: [
     AdminGuard,
+    OfficeGuard,
+    TeacherGuard,
+    StudentGuard,
     AuthService
   ]
 })

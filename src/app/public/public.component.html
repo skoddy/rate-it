@@ -1,3 +1,32 @@
-<p>
-  public works!
-</p>
+<div class="outer">
+  <div class="middle">
+    <div class="inner">
+      <main>
+        <section>
+          <mat-card class="mat-elevation-z8">
+            <form [formGroup]="signInForm" (ngSubmit)="signIn()">
+              <h3>Anmelden</h3>
+              <mat-card-content>
+                <mat-form-field [formGroup]="signInForm">
+                  <input matInput name="email" placeholder="E-Mail" [formControl]="email" required>
+                  <mat-error *ngIf="email.valid">Not a valid email</mat-error>
+                </mat-form-field>
+
+                <mat-form-field [formGroup]="signInForm">
+                  <input matInput name="password" placeholder="Password" [type]="hide ? 'password' : 'text'"
+                    [formControl]="password" required>
+                  <mat-icon matSuffix (click)="hide = !hide">{{ hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                  <mat-hint align="end">
+                    <a routerLink="/reset-password">Forgot password?</a>
+                  </mat-hint>
+                  <mat-error *ngIf="password.valid">Not a valid password</mat-error>
+                </mat-form-field>
+                <button mat-raised-button type="submit" color="primary">Anmelden</button>
+              </mat-card-content>
+            </form>
+          </mat-card>
+        </section>
+      </main>
+    </div>
+  </div>
+</div>

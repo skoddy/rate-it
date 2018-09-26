@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { PublicRoutingModule } from './public-routing.module';
 import { PublicComponent } from './public.component';
+import { SharedModule } from '@app/shared/shared.module';
 
 @NgModule({
   imports: [
-    CommonModule,
+    SharedModule,
     PublicRoutingModule
   ],
   declarations: [PublicComponent]

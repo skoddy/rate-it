@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { OfficeComponent } from '@app/office/office.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: '', component: OfficeComponent }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

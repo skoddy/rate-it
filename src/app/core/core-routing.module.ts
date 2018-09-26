@@ -14,22 +14,22 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    canActivate: [AdminGuard],
+    //canActivate: [AdminGuard],
     loadChildren: '../admin/admin.module#AdminModule'
   },
   {
     path: 'office',
-    canActivate: [AdminGuard],
+    //canActivate: [AdminGuard],
     loadChildren: '../office/office.module#OfficeModule'
   },
   {
     path: 'teacher',
-    canActivate: [AdminGuard],
+    //canActivate: [AdminGuard],
     loadChildren: '../teacher/teacher.module#TeacherModule'
   },
   {
     path: 'student',
-    canActivate: [AdminGuard],
+    //canActivate: [AdminGuard],
     loadChildren: '../student/student.module#StudentModule'
   }
 ];

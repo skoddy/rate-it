@@ -16,8 +16,8 @@ export class StudentGuard implements CanActivate {
     return this.auth.user$.pipe(
       take(1),
       map(user => user && user.roles.student ? true : false),
-      tap(isAdmin => {
-        if (!isAdmin) {
+      tap(isStudent => {
+        if (!isStudent) {
           console.error('Access denied - Students only');
         }
       })

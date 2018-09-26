@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { TeacherRoutingModule } from './teacher-routing.module';
-import { TeacherComponent } from '@app/teacher/teacher.component';
+import { TeacherComponent } from '@app/features/teacher/teacher.component';
 
 @NgModule({
   imports: [

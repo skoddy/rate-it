@@ -74,7 +74,7 @@ export class AuthService {
     });
   }
 
-  createUserWithEmailAndPassword(email: string, password: string) {
+  createUserWithEmailAndPassword(email: string, password: string, role: string) {
     return this.afAuth.auth
     .createUserWithEmailAndPassword(email, password)
     .then((credential) => {
@@ -115,7 +115,7 @@ export class AuthService {
   private updateUserData(user) {
     // Sets user data to firestore on login
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-
+    
     const data: User = {
       uid: user.uid,
       email: user.email || null,

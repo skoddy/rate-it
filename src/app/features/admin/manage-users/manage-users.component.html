@@ -1,0 +1,42 @@
+<p>
+  manage-users works!
+</p>
+
+<div *ngFor="let user of users$ | async">
+  <div>{{user.email}}</div>
+</div>
+<form [formGroup]="newUserForm" (ngSubmit)="createUser()">
+<mat-card>
+  <mat-card-title>
+    Neuer Benutzer
+  </mat-card-title>
+  <mat-card-content>
+      <div class="new-user-container">
+        <mat-form-field appearance="fill">
+          <mat-label>E-Mail-Adresse</mat-label>
+          <input matInput formControlName="email" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Passwort</mat-label>
+          <input matInput formControlName="password" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-select placeholder="Rolle" formControlName="role" required>
+            <mat-option value="option">Office</mat-option>
+            <mat-option value="option">Dozent</mat-option>
+            <mat-option value="option">Schüler</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button mat-button type="reset">Zurücksetzen</button>
+      <button mat-button type="submit" [disabled]="!newUserForm.valid">Speichern</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

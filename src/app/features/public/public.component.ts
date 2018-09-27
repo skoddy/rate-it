@@ -9,6 +9,7 @@ import { User } from '@app/data-model';
   templateUrl: './public.component.html',
   styleUrls: ['./public.component.scss']
 })
+
 export class PublicComponent implements OnInit {
   user: User;
   signInForm: FormGroup;

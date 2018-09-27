@@ -19,7 +19,6 @@ export class TeacherGuard implements CanActivate {
       tap(isTeacher => {
         if (!isTeacher) {
           console.error('Access denied - Teachers only');
-          this.router.navigate(['admin']);
         }
       })
     );

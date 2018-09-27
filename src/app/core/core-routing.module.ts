@@ -17,22 +17,22 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    canActivate: [AdminGuard],
+    // canActivate: [AdminGuard],
     loadChildren: '../features/admin/admin.module#AdminModule'
   },
   {
     path: 'office',
-    canActivate: [OfficeGuard],
+    // canActivate: [OfficeGuard],
     loadChildren: '../features/office/office.module#OfficeModule'
   },
   {
     path: 'teacher',
-    canActivate: [TeacherGuard],
+    // canActivate: [TeacherGuard],
     loadChildren: '../features/teacher/teacher.module#TeacherModule'
   },
   {
     path: 'student',
-    canActivate: [StudentGuard],
+    // canActivate: [StudentGuard],
     loadChildren: '../features/student/student.module#StudentModule'
   }
 ];

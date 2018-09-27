@@ -23,7 +23,19 @@ export class AdminService {
         return actions.map(a => {
           const data = a.payload.doc.data() as User;
           const id = a.payload.doc.id;
-          return { id, ...data }
+          return { id, ...data };
+        });
+      })
+    );
+  }
+
+  getUsersAsArray(): Observable<User[]> {
+    return this.userCollection.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data() as User;
+          const id = a.payload.doc.id;
+          return { id, ...data };
         });
       })
     );
@@ -38,7 +50,7 @@ export class AdminService {
     return this.userDoc.valueChanges();
   }
 
-  newUser(email: string, password: string, role: string) {
-    return this.auth.createUserWithEmailAndPassword(email, password, role);
+  newUser(email: string, displayName: string, password: string, role: string) {
+    return this.auth.createUserWithEmailAndPassword(email, displayName, password, role);
   }
 }

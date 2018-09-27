@@ -56,17 +56,11 @@ export class AuthService {
     return this.authState.email || '';
   }
 
-  googleLogin() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    return this.oAuthLogin(provider);
+  // Returns current user roles
+  get roles(): string {
+    return this.authState.roles || '';
   }
 
-  private oAuthLogin(provider) {
-    return this.afAuth.auth.signInWithPopup(provider)
-      .then((credential) => {
-        this.updateUserData(credential.user);
-      });
-  }
   signOut() {
     this.afAuth.auth.signOut().then(() => {
       this.router.navigate(['/']);
@@ -74,60 +68,42 @@ export class AuthService {
     });
   }
 
-  createUserWithEmailAndPassword(email: string, password: string, role: string) {
+  createUserWithEmailAndPassword(email: string, displayName: string, password: string, role: string) {
     return this.afAuth.auth
-    .createUserWithEmailAndPassword(email, password)
-    .then((credential) => {
-      this.updateUserData(credential.user);
-    });
+      .createUserWithEmailAndPassword(email, password)
+      .then((credential) => {
+        this.setUserData(credential.user, displayName, role);
+      });
   }
 
   emailSignIn(email: string, password: string) {
     return this.afAuth.auth
       .signInWithEmailAndPassword(email, password)
-      .then((credential) => {
-        this.updateUserData(credential.user);
-        console.log('You have successfully signed in');
-      })
       .catch(error => console.log(error.message));
   }
 
-  githubLogin() {
-    const provider = new firebase.auth.GithubAuthProvider();
-    return this.oAuthLogin(provider);
-  }
-
-  facebookLogin() {
-    const provider = new firebase.auth.FacebookAuthProvider();
-    return this.oAuthLogin(provider);
-  }
-
-  twitterLogin() {
-    const provider = new firebase.auth.TwitterAuthProvider();
-    return this.oAuthLogin(provider);
-  }
 
   // If error, console log and toast user
   private handleError(error: Error) {
     console.error(error);
   }
 
-  private updateUserData(user) {
-    // Sets user data to firestore on login
+  private setUserData(user, displayName, role) {
+
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-    
     const data: User = {
       uid: user.uid,
       email: user.email || null,
-      displayName: user.displayName,
+      displayName: displayName,
       photoURL: user.photoURL || 'https://goo.gl/Fz9nrQ',
       roles: {
-        subscriber: true
+        admin: (role === 'admin') ? true : false,
+        office: (role === 'office') ? true : false,
+        teacher: (role === 'teacher') ? true : false,
+        student: (role === 'student') ? true : false,
       }
     };
-
     return userRef.set(data, { merge: true });
-
   }
   ///// Role-based Authorization //////
   canRead(user: User): boolean {

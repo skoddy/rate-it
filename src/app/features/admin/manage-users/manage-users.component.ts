@@ -1,16 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
 import { User } from '@app/data-model';
 import { AdminService } from '@app/features/admin/admin.service';
-import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { DataSource } from '@angular/cdk/table';
 
 @Component({
   selector: 'app-manage-users',
   templateUrl: './manage-users.component.html',
   styleUrls: ['./manage-users.component.css']
 })
+
 export class ManageUsersComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -54,7 +53,6 @@ export class ManageUsersComponent implements OnInit {
   }
 
   createUser() {
-
     console.log('create user');
     this.adminService.newUser(
       this.newUserForm.get('email').value,
@@ -62,6 +60,5 @@ export class ManageUsersComponent implements OnInit {
       this.newUserForm.get('password').value,
       this.newUserForm.get('role').value);
   }
-
 }
 

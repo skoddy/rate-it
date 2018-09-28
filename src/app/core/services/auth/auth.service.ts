@@ -68,11 +68,21 @@ export class AuthService {
     });
   }
 
-  createUserWithEmailAndPassword(email: string, displayName: string, password: string, role: string) {
-    return this.afAuth.auth
+  createUserWithEmailAndPasswordAsAdmin(email: string, displayName: string, password: string, role: string) {
+    
+    var config = {
+      apiKey: "AIzaSyB5uwLUmV7G4-06l1t06SOOY5IZDtDLvhk",
+      authDomain: "ang-fir-mat.firebaseapp.com",
+      databaseURL: "https://ang-fir-mat.firebaseio.com",
+    };
+
+    var secondaryApp = firebase.initializeApp(config, "Secondary");
+
+    return secondaryApp.auth()
       .createUserWithEmailAndPassword(email, password)
       .then((credential) => {
         this.setUserData(credential.user, displayName, role);
+        secondaryApp.auth().signOut();
       });
   }
 

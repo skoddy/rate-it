@@ -10,7 +10,7 @@ import { User } from '@app/data-model';
 export class NewUserComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<NewUserComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: User) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
   }

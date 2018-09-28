@@ -68,11 +68,24 @@ export class AuthService {
     });
   }
 
-  createUserWithEmailAndPassword(email: string, displayName: string, password: string, role: string) {
-    return this.afAuth.auth
+  createUserWithEmailAndPasswordAsAdmin(email: string, displayName: string, password: string, role: string) {
+   /* 
+   The createUserWithEmailAndPassword() function signs the user automaticly in
+   so we have to create a secondary app because we want to stay signed in as Admin.
+   */
+    const config = {
+      apiKey: "AIzaSyB5uwLUmV7G4-06l1t06SOOY5IZDtDLvhk",
+      authDomain: "ang-fir-mat.firebaseapp.com",
+      databaseURL: "https://ang-fir-mat.firebaseio.com",
+    };
+
+    const secondaryApp = firebase.initializeApp(config, "Secondary");
+
+    return secondaryApp.auth()
       .createUserWithEmailAndPassword(email, password)
       .then((credential) => {
         this.setUserData(credential.user, displayName, role);
+        secondaryApp.auth().signOut();
       });
   }
 

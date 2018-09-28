@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Neuer Benutzer</h2>
+<mat-dialog-content>
+  <div class="new-user-container">
+    <mat-form-field appearance="fill">
+      <mat-label>E-Mail-Adresse</mat-label>
+      <input matInput [(ngModel)]="data.email" required>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="data.displayName" required>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Passwort</mat-label>
+      <input matInput [(ngModel)]="data.password"  required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-select placeholder="Rolle" [(ngModel)]="data.role" required>
+        <mat-option value="admin">Admin</mat-option>
+        <mat-option value="office">Office</mat-option>
+        <mat-option value="teacher">Dozent</mat-option>
+        <mat-option value="student">Schüler</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button class="mat-raised-button"(click)="close()">Close</button>
+    <button class="mat-raised-button mat-primary"(click)="save()">Save</button>
+</mat-dialog-actions>

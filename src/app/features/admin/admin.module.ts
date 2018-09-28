@@ -8,6 +8,7 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { SharedModule } from '@app/shared/shared.module';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '@env/environment';
+import { NewUserComponent } from './dialogs/new-user/new-user.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -15,7 +16,8 @@ import { environment } from '@env/environment';
     AdminRoutingModule,
     AngularFireModule.initializeApp(environment.firebase, 'admin-app'),
   ],
-  declarations: [AdminComponent, ManageUsersComponent, AdminDashboardComponent],
-  providers: []
+  declarations: [AdminComponent, ManageUsersComponent, AdminDashboardComponent, NewUserComponent],
+  providers: [],
+  entryComponents: [NewUserComponent]
 })
 export class AdminModule { }

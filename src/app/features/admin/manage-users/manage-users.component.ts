@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '@app/data-model';
 import { AdminService } from '@app/features/admin/admin.service';
-import { Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
+import { NewUserComponent } from '@app/features/admin/dialogs/new-user/new-user.component';
 
 @Component({
   selector: 'app-manage-users',
   templateUrl: './manage-users.component.html',
-  styleUrls: ['./manage-users.component.css']
+  styleUrls: ['./manage-users.component.scss']
 })
 
 export class ManageUsersComponent implements OnInit {
@@ -17,11 +17,13 @@ export class ManageUsersComponent implements OnInit {
 
   displayedColumns: string[] = ['displayName', 'email', 'role'];
   dataSource: MatTableDataSource<User>;
-  newUserForm: FormGroup;
 
+  newUserDisplayName: string;
+  newUserEmail: string;
   constructor(
     private adminService: AdminService,
-    private fb: FormBuilder) { }
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.adminService.getUsers().subscribe((user: User[]) => {
@@ -32,7 +34,25 @@ export class ManageUsersComponent implements OnInit {
     }, (err => {
       console.log(err);
     }));
-    this.createForm();
+  }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(NewUserComponent, {
+      maxWidth: '500px',
+      width: '400px',
+      data: {email: this.newUserEmail, displayName: this.newUserDisplayName}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result) {
+         this.adminService.newUser(
+          result.email,
+          result.displayName,
+          result.password,
+          result.role
+          ); 
+      }
+    });
   }
 
   applyFilter(filterValue: string) {
@@ -43,22 +63,13 @@ export class ManageUsersComponent implements OnInit {
     }
   }
 
-  createForm(): any {
-    this.newUserForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      name: ['', [Validators.required]],
-      password: ['', [Validators.required]],
-      role: ['', [Validators.required]]
-    });
-  }
-
-  createUser() {
+  createUser(email: string, name: string, password: string, role: string) {
     console.log('create user');
     this.adminService.newUser(
-      this.newUserForm.get('email').value,
-      this.newUserForm.get('name').value,
-      this.newUserForm.get('password').value,
-      this.newUserForm.get('role').value);
+      email,
+      name,
+      password,
+      role);
   }
 }
 

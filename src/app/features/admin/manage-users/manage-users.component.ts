@@ -15,11 +15,12 @@ export class ManageUsersComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns: string[] = ['displayName', 'email', 'role'];
+  displayedColumns: string[] = ['createdAt', 'displayName', 'email', 'roles'];
   dataSource: MatTableDataSource<User>;
 
   newUserDisplayName: string;
   newUserEmail: string;
+
   constructor(
     private adminService: AdminService,
     public dialog: MatDialog
@@ -27,10 +28,12 @@ export class ManageUsersComponent implements OnInit {
 
   ngOnInit() {
     this.adminService.getUsers().subscribe((user: User[]) => {
+
       // Assign the data to the data source for the table to render
       this.dataSource = new MatTableDataSource(user);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+
     }, (err => {
       console.log(err);
     }));
@@ -39,18 +42,18 @@ export class ManageUsersComponent implements OnInit {
     const dialogRef = this.dialog.open(NewUserComponent, {
       maxWidth: '500px',
       width: '400px',
-      data: {email: this.newUserEmail, displayName: this.newUserDisplayName}
+      data: {}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result) {
-         this.adminService.newUser(
+        this.adminService.newUser(
           result.email,
           result.displayName,
           result.password,
           result.role
-          ); 
+        );
       }
     });
   }

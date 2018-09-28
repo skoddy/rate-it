@@ -10,6 +10,6 @@ export interface User {
     email: string;
     displayName: string;
     photoURL: string;
+    createdAt: Date;
     roles: Roles;
-    darkmode?: boolean;
 }

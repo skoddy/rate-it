@@ -105,6 +105,7 @@ export class AuthService {
       email: user.email || null,
       displayName: displayName,
       photoURL: user.photoURL || 'https://goo.gl/Fz9nrQ',
+      createdAt: new Date(),
       roles: {
         admin: (role === 'admin') ? true : false,
         office: (role === 'office') ? true : false,

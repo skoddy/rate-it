@@ -3,14 +3,20 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from '@app/features/admin/admin.component';
 import { ManageUsersComponent } from '@app/features/admin/manage-users/manage-users.component';
 import { AdminDashboardComponent } from '@app/features/admin/admin-dashboard/admin-dashboard.component';
+import { ManageClassesComponent } from '@app/features/admin/manage-classes/manage-classes.component';
+import { ManageModulesComponent } from '@app/features/admin/manage-modules/manage-modules.component';
 
 const routes: Routes = [
-  { path: '', component: AdminComponent,
-  children: [
-    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-    { path: 'dashboard', component: AdminDashboardComponent},
-    { path: 'manage-users', component: ManageUsersComponent }
-] }
+  {
+    path: '', component: AdminComponent,
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: AdminDashboardComponent },
+      { path: 'users', component: ManageUsersComponent },
+      { path: 'classes', component: ManageClassesComponent },
+      { path: 'modules', component: ManageModulesComponent }
+    ]
+  }
 ];
 
 @NgModule({

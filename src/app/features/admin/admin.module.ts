@@ -12,6 +12,7 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageClassesComponent } from './manage-classes/manage-classes.component';
 import { ManageModulesComponent } from './manage-modules/manage-modules.component';
+import { ManageRatingsComponent } from './manage-ratings/manage-ratings.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { ManageModulesComponent } from './manage-modules/manage-modules.componen
     AdminDashboardComponent,
     NewUserComponent,
     ManageClassesComponent,
-    ManageModulesComponent
+    ManageModulesComponent,
+    ManageRatingsComponent
   ],
   providers: [],
   entryComponents: [NewUserComponent]

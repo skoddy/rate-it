@@ -13,13 +13,16 @@ import { environment } from '@env/environment';
 export class AuthService {
 
   user$: Observable<User | null>;
-
   authState: any = null;
 
   constructor(
+
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    public router: Router) {
+    public router: Router
+
+  ) {
+
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
@@ -30,6 +33,7 @@ export class AuthService {
       })
 
     );
+
     this.afAuth.authState.subscribe(data => this.authState = data);
   }
 
@@ -37,6 +41,7 @@ export class AuthService {
     return this.authState !== null;
   }
 
+  // Returns the user id if authenticated otherwise null.
   get uid(): string {
     return this.authenticated ? this.authState.uid : null;
   }
@@ -68,12 +73,18 @@ export class AuthService {
     });
   }
 
-  createUserWithEmailAndPasswordAsAdmin(email: string, displayName: string, password: string, role: string) {
-   /*
-   The createUserWithEmailAndPassword() function signs the user automaticly in
-   so we have to create a secondary app because we want to stay signed in as Admin.
-   */
+  createUserWithEmailAndPasswordAsAdmin(
+    email: string,
+    displayName: string,
+    password: string,
+    role: string
+  ) {
 
+    /*
+    The createUserWithEmailAndPassword() function signs
+    the user automaticly in so we have to create a secondary app to create users,
+    because we want to stay signed in as Admin.
+    */
 
     const secondaryApp = firebase.initializeApp(environment.admin, 'admin');
 
@@ -113,24 +124,8 @@ export class AuthService {
         student: (role === 'student') ? true : false,
       }
     };
-    return userRef.set(data, { merge: true });
+    return userRef.set(data);
   }
-  ///// Role-based Authorization //////
-  canRead(user: User): boolean {
-    const allowed = ['admin', 'editor', 'subscriber'];
-    return this.checkAuthorization(user, allowed);
-  }
-  canEdit(user: User): boolean {
-    const allowed = ['admin', 'editor'];
-    return this.checkAuthorization(user, allowed);
-  }
-
-  canDelete(user: User): boolean {
-    const allowed = ['admin'];
-    return this.checkAuthorization(user, allowed);
-  }
-
-
 
   // determines if user has matching role
   private checkAuthorization(user: User, allowedRoles: string[]): boolean {

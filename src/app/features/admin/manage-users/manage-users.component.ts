@@ -18,9 +18,6 @@ export class ManageUsersComponent implements OnInit {
   displayedColumns: string[] = ['createdAt', 'displayName', 'email', 'roles'];
   dataSource: MatTableDataSource<User>;
 
-  newUserDisplayName: string;
-  newUserEmail: string;
-
   constructor(
     private adminService: AdminService,
     public dialog: MatDialog

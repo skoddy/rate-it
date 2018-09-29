@@ -9,28 +9,17 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule } from '@angular/material';
-import { MyDashboardComponent } from './my-dashboard/my-dashboard.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    MyDashboardComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     CoreModule,
     AngularFireModule.initializeApp(environment.firebase, 'main-app'),
-    LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatGridListModule,
-    MatCardModule,
-    MatMenuModule
+    LayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

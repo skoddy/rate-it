@@ -49,8 +49,6 @@ export class PublicComponent implements OnInit {
       .then(u => {
         if (this.signInForm.valid) {
         }
-
-        console.log('signed in!');
       });
   }
 }

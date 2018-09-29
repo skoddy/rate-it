@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '@app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-office',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OfficeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private auth: AuthService) { }
 
   ngOnInit() {
   }
-
+  signOut() {
+    this.auth.signOut();
+  }
 }

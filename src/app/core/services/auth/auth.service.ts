@@ -16,12 +16,9 @@ export class AuthService {
   authState: any = null;
 
   constructor(
-
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    public router: Router
-
-  ) {
+    public router: Router) {
 
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
@@ -78,12 +75,10 @@ export class AuthService {
     email: string,
     displayName: string,
     password: string,
-    role: string
-  ) {
-
+    role: string) {
     /*
     The createUserWithEmailAndPassword() function signs
-    the user automaticly in so we have to create a secondary app to create users,
+    the user automaticly in, so we have to create a secondary app to create users,
     because we want to stay signed in as Admin.
     */
 
@@ -94,6 +89,13 @@ export class AuthService {
       .then((credential) => {
         this.setUserData(credential.user, displayName, role);
         secondaryApp.auth().signOut();
+        secondaryApp.delete()
+          .then(function () {
+            console.log('App deleted successfully');
+          })
+          .catch(function (error) {
+            console.log('Error deleting app:', error);
+          });
       });
   }
 
@@ -130,17 +132,18 @@ export class AuthService {
 
   // determines if user has matching role
   public checkAuthorization(user?: User) {
-    const roles = ['admin', 'office', ' teacher', 'student'];
+    const roles = ['admin', 'office', 'teacher', 'student'];
+    let route: string;
     if (user) {
       for (const role of roles) {
         if (user.roles[role] === true) {
           console.log(role);
-          return this.router.navigate([role], { replaceUrl: true });
-
+          route = role;
         }
       }
     } else {
-      return this.router.navigate(['public'], { replaceUrl: true });
+      route = 'public';
     }
+    return this.router.navigate([route], { replaceUrl: true });
   }
 }

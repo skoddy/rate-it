@@ -10,25 +10,10 @@ import { Router } from '@angular/router';
 })
 
 export class AppComponent {
-  title = 'rate-it';
-  redirect() {
-    console.log('asd');
-    return this.auth.user$.pipe(
-      take(1),
-      map(user => user && user.roles.office ? true : false),
-      tap(isOffice => {
-        if (!isOffice) {
-          console.error('Access denied - Office only');
 
-        }
-      })
-    );
-  }
-  constructor(public auth: AuthService, private router: Router) {
+  constructor(public auth: AuthService) {
     this.auth.user$.subscribe(user => {
-
-        this.auth.checkAuthorization(user);
-
+      this.auth.checkAuthorization(user);
     });
 
   }

@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { OfficeRoutingModule } from './office-routing.module';
 import { OfficeComponent } from '@app/features/office/office.component';
+import { SharedModule } from '@app/shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    OfficeRoutingModule
+    OfficeRoutingModule,
+    SharedModule
   ],
   declarations: [OfficeComponent]
 })

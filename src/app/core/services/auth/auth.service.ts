@@ -137,7 +137,6 @@ export class AuthService {
     if (user) {
       for (const role of roles) {
         if (user.roles[role] === true) {
-          console.log(role);
           route = role;
         }
       }

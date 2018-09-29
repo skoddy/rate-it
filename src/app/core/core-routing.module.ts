@@ -7,11 +7,6 @@ import { StudentGuard } from '@app/core/services/auth/student.guard';
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'public',
-    pathMatch: 'full'
-  },
-  {
     path: 'public',
     loadChildren: '../features/public/public.module#PublicModule'
   },

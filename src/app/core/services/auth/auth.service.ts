@@ -6,7 +6,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take, map, tap } from 'rxjs/operators';
 import { User } from '@app/data-model';
 import { environment } from '@env/environment';
 @Injectable()
@@ -35,6 +35,7 @@ export class AuthService {
     );
 
     this.afAuth.authState.subscribe(data => this.authState = data);
+
   }
 
   get authenticated(): boolean {
@@ -128,15 +129,18 @@ export class AuthService {
   }
 
   // determines if user has matching role
-  private checkAuthorization(user: User, allowedRoles: string[]): boolean {
-    if (!user) {
-      return false;
-    }
-    for (const role of allowedRoles) {
-      if (user.roles[role]) {
-        return true;
+  public checkAuthorization(user?: User) {
+    const roles = ['admin', 'office', ' teacher', 'student'];
+    if (user) {
+      for (const role of roles) {
+        if (user.roles[role] === true) {
+          console.log(role);
+          return this.router.navigate([role], { replaceUrl: true });
+
+        }
       }
+    } else {
+      return this.router.navigate(['public'], { replaceUrl: true });
     }
-    return false;
   }
 }

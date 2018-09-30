@@ -2,13 +2,13 @@
 <h1 class="mat-h1">Benutzer</h1>
 <mat-card>
   <button mat-stroked-button (click)="openDialog()" color="primary">
-    <mat-icon>person_add</mat-icon> Neuer Benutzer
+    <mat-icon>person_add</mat-icon> Benutzer hinzufügen
   </button>
   <mat-form-field>
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    <input name="user-search" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
 
-  <table mat-table [dataSource]="dataSource" matSort matSortActive="createdAt" matSortDirection="desc">
+  <table mat-table [dataSource]="userDataSource" matSort matSortActive="createdAt" matSortDirection="desc">
 
     <!-- ID Column -->
     <ng-container matColumnDef="createdAt">

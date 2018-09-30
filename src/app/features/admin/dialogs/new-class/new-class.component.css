@@ -1,0 +1,8 @@
+.new-class-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .new-class-container > * {
+    width: 100%;
+  }

@@ -13,3 +13,11 @@ export interface User {
     createdAt: Date;
     roles: Roles;
 }
+
+export interface Class {
+    name: string;
+    start: Date;
+    end: Date;
+    createdAt: Date;
+    info: string;
+}

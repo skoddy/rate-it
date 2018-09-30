@@ -3,15 +3,15 @@
   <div class="new-user-container">
     <mat-form-field appearance="fill">
       <mat-label>E-Mail-Adresse</mat-label>
-      <input matInput [(ngModel)]="data.email" required>
+      <input name="email" matInput [(ngModel)]="data.email" required>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Name</mat-label>
-      <input matInput [(ngModel)]="data.displayName" required>
+      <input name="name" matInput [(ngModel)]="data.displayName" required>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Passwort</mat-label>
-      <input matInput [(ngModel)]="data.password"  required>
+      <input name="password" matInput [(ngModel)]="data.password"  required>
     </mat-form-field>
 
     <mat-form-field appearance="fill">

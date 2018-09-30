@@ -16,7 +16,7 @@ export class ManageUsersComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   displayedColumns: string[] = ['createdAt', 'displayName', 'email', 'roles'];
-  dataSource: MatTableDataSource<User>;
+  userDataSource: MatTableDataSource<User>;
 
   constructor(
     private adminService: AdminService,
@@ -27,9 +27,9 @@ export class ManageUsersComponent implements OnInit {
     this.adminService.getUsers().subscribe((user: User[]) => {
 
       // Assign the data to the data source for the table to render
-      this.dataSource = new MatTableDataSource(user);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.userDataSource = new MatTableDataSource(user);
+      this.userDataSource.paginator = this.paginator;
+      this.userDataSource.sort = this.sort;
 
     }, (err => {
       console.log(err);
@@ -56,10 +56,10 @@ export class ManageUsersComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.userDataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    if (this.userDataSource.paginator) {
+      this.userDataSource.paginator.firstPage();
     }
   }
 

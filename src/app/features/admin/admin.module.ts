@@ -13,6 +13,7 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageClassesComponent } from './manage-classes/manage-classes.component';
 import { ManageModulesComponent } from './manage-modules/manage-modules.component';
 import { ManageRatingsComponent } from './manage-ratings/manage-ratings.component';
+import { NewClassComponent } from './dialogs/new-class/new-class.component';
 
 @NgModule({
   imports: [
@@ -26,11 +27,12 @@ import { ManageRatingsComponent } from './manage-ratings/manage-ratings.componen
     ManageUsersComponent,
     AdminDashboardComponent,
     NewUserComponent,
+    NewClassComponent,
     ManageClassesComponent,
     ManageModulesComponent,
     ManageRatingsComponent
   ],
   providers: [],
-  entryComponents: [NewUserComponent]
+  entryComponents: [NewUserComponent, NewClassComponent]
 })
 export class AdminModule { }

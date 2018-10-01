@@ -7,13 +7,14 @@ import { SharedModule } from '@app/shared/shared.module';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '@env/environment';
 import { NewUserComponent } from './dialogs/new-user/new-user.component';
-
+import { MyTableComponent } from './my-table/my-table.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageClassesComponent } from './manage-classes/manage-classes.component';
 import { ManageModulesComponent } from './manage-modules/manage-modules.component';
 import { ManageRatingsComponent } from './manage-ratings/manage-ratings.component';
 import { NewClassComponent } from './dialogs/new-class/new-class.component';
+import { NewModulComponent } from './dialogs/new-modul/new-modul.component';
 
 @NgModule({
   imports: [
@@ -30,9 +31,11 @@ import { NewClassComponent } from './dialogs/new-class/new-class.component';
     NewClassComponent,
     ManageClassesComponent,
     ManageModulesComponent,
-    ManageRatingsComponent
+    ManageRatingsComponent,
+    MyTableComponent,
+    NewModulComponent
   ],
   providers: [],
-  entryComponents: [NewUserComponent, NewClassComponent]
+  entryComponents: [NewUserComponent, NewClassComponent, NewModulComponent]
 })
 export class AdminModule { }

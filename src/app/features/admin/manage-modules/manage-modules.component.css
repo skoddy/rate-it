@@ -1,3 +1,21 @@
 .container {
-    margin: 20px;
+  margin: 20px;
+}
+  table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  td, th {
+    width: 25%;
+  }
+  .add-button-icon {
+    margin-right: 8px;
+  }
+  .search-field {
+    margin-top: 16px;
   }

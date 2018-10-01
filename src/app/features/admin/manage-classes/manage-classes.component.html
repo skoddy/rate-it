@@ -8,7 +8,7 @@
       <input  name="class-search" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
 
-    <table mat-table [dataSource]="classDataSource" matSort matSortActive="createdAt" matSortDirection="desc">
+    <table mat-table [dataSource]="classDataSource" matSort matSortActive="name" matSortDirection="asc">
 
       <!-- Name Column -->
       <ng-container matColumnDef="name">
@@ -20,18 +20,6 @@
       <ng-container matColumnDef="info">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Info </th>
         <td mat-cell *matCellDef="let row"> {{row.info}} </td>
-      </ng-container>
-
-      <!-- Start Column -->
-      <ng-container matColumnDef="start">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Start </th>
-        <td mat-cell *matCellDef="let row"> {{row.start.toDate() | date : 'dd.LL.yy':'':'de'}} </td>
-      </ng-container>
-
-      <!-- End Column -->
-      <ng-container matColumnDef="end">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ende </th>
-        <td mat-cell *matCellDef="let row"> {{row.end.toDate() | date : 'dd.LL.yy':'':'de'}} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

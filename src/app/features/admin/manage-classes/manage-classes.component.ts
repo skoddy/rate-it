@@ -15,7 +15,7 @@ export class ManageClassesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns: string[] = ['name', 'info', 'start', 'end'];
+  displayedColumns: string[] = ['name', 'info'];
   classDataSource: MatTableDataSource<Class>;
   constructor(
     private adminService: AdminService,
@@ -47,9 +47,7 @@ export class ManageClassesComponent implements OnInit {
       if (result) {
         this.adminService.newClass(
           result.name,
-          result.info,
-          result.start.toDate(),
-          result.end.toDate()
+          result.info
         );
       }
     });

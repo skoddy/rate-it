@@ -11,19 +11,6 @@
       <mat-label>Info</mat-label>
       <input name="class-info" matInput [(ngModel)]="data.info" required>
     </mat-form-field>
-    <mat-form-field appearance="fill">
-      <input name="class-start" matInput [matDatepicker]="start" placeholder="Start" [(ngModel)]="data.start">
-      <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-      <mat-datepicker #start></mat-datepicker>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <input class="class-end" matInput [matDatepicker]="end" placeholder="Ende" [(ngModel)]="data.end">
-      <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
-      <mat-datepicker #end></mat-datepicker>
-    </mat-form-field>
-
-
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

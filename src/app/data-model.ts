@@ -16,8 +16,17 @@ export interface User {
 
 export interface Class {
     name: string;
+    info: string;
+}
+
+export interface Modul {
+    name: string;
+}
+
+export interface Rating {
+    teacher: string;
+    className: string;
+    moduleName: string;
     start: Date;
     end: Date;
-    createdAt: Date;
-    info: string;
 }

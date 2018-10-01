@@ -1,9 +1,11 @@
-.toolbar-icon {
-    padding: 0 14px;
-}
+
   
 .toolbar-spacer {
     flex: 1 1 auto;
+}
+
+.admin-toolbar {
+  z-index: 999;
 }
 .sidenav-container {
     height: 100%;

@@ -28,9 +28,7 @@ export class AuthService {
           return of(null);
         }
       })
-
     );
-
     this.afAuth.authState.subscribe(data => this.authState = data);
 
   }
@@ -46,7 +44,7 @@ export class AuthService {
 
   // Returns current user display name or Guest
   get displayName(): string {
-    return this.authState.displayName || this.authState.email;
+    return this.authState.displayName || 'this.authState.email';
   }
 
   // Returns current user photo
@@ -102,6 +100,7 @@ export class AuthService {
   emailSignIn(email: string, password: string) {
     return this.afAuth.auth
       .signInWithEmailAndPassword(email, password)
+      .then(user => console.log(user))
       .catch(error => console.log(error.message));
   }
 

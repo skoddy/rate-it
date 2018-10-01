@@ -16,7 +16,7 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <mat-toolbar color="primary">
+      <mat-toolbar class="admin-toolbar" color="primary">
         <button
           type="button"
           aria-label="Toggle sidenav"
@@ -27,7 +27,9 @@
         </button>
         <span>Admin</span>
         <span class="toolbar-spacer"></span>
-        <mat-icon (click)="signOut()" class="toolbar-icon">favorite</mat-icon>
+        <button mat-icon-button>
+          <mat-icon aria-label="Sign Out" (click)="signOut()" class="toolbar-icon">exit_to_app</mat-icon>
+        </button>
       </mat-toolbar>
       <router-outlet></router-outlet>
     </mat-sidenav-content>

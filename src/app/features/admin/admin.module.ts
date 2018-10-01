@@ -18,7 +18,6 @@ import { NewModulComponent } from './dialogs/new-modul/new-modul.component';
 
 @NgModule({
   imports: [
-    CommonModule,
     SharedModule,
     AdminRoutingModule,
     AngularFireModule.initializeApp(environment.firebase, 'admin-app'),

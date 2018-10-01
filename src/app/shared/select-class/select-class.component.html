@@ -1,0 +1,8 @@
+<mat-form-field  appearance="fill" class="select-class">
+    <mat-label>Klasse</mat-label>
+    <mat-select placeholder="Klasse" [(ngModel)]="classId" (selectionChange)="selectClassService.selectedClass($event.value)">
+      <mat-option  *ngFor="let class of classes" [value]="class.id">
+        {{class.name}}
+      </mat-option>
+    </mat-select>
+</mat-form-field>

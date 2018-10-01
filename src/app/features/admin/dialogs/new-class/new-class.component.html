@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>
   <mat-icon>group_add</mat-icon> Klasse hinzufügen
 </h2>
-<mat-dialog-content>
+<mat-card-content>
   <div class="new-class-container">
     <mat-form-field  appearance="fill">
       <mat-label>Name</mat-label>
@@ -12,7 +12,7 @@
       <input name="class-info" matInput [(ngModel)]="data.info" required>
     </mat-form-field>
   </div>
-</mat-dialog-content>
+</mat-card-content>
 <mat-dialog-actions align="end">
   <button class="mat-raised-button" (click)="close()">Close</button>
   <button class="mat-raised-button mat-primary" (click)="save()">Save</button>

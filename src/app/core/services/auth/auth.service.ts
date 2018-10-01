@@ -73,7 +73,8 @@ export class AuthService {
     email: string,
     displayName: string,
     password: string,
-    role: string) {
+    role: string,
+    classId?: string) {
     /*
     The createUserWithEmailAndPassword() function signs
     the user automaticly in, so we have to create a secondary app to create users,
@@ -85,7 +86,7 @@ export class AuthService {
     return secondaryApp.auth()
       .createUserWithEmailAndPassword(email, password)
       .then((credential) => {
-        this.setUserData(credential.user, displayName, role);
+        this.setUserData(credential.user, displayName, role, classId);
         secondaryApp.auth().signOut();
         secondaryApp.delete()
           .then(function () {
@@ -110,7 +111,7 @@ export class AuthService {
     console.error(error);
   }
 
-  private setUserData(user, displayName, role) {
+  private setUserData(user, displayName, role, classId?: string) {
 
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     const data: User = {
@@ -119,6 +120,7 @@ export class AuthService {
       displayName: displayName,
       photoURL: user.photoURL || 'https://goo.gl/Fz9nrQ',
       createdAt: new Date(),
+      classId: classId ? classId : '',
       roles: {
         admin: (role === 'admin') ? true : false,
         office: (role === 'office') ? true : false,

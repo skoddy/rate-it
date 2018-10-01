@@ -11,22 +11,25 @@ export interface User {
     displayName: string;
     photoURL: string;
     createdAt: Date;
+    classId?: string;
     roles: Roles;
 }
 
 export interface Class {
+    id?: string;
     name: string;
     info: string;
 }
 
 export interface Modul {
+    id?: string;
     name: string;
 }
 
 export interface Rating {
     teacher: string;
-    className: string;
-    moduleName: string;
+    classId: string;
+    moduleId: string;
     start: Date;
     end: Date;
 }

@@ -47,12 +47,12 @@ export class TeacherService {
     return this.userDoc.valueChanges();
   }
 
-  startRating(teacher: string, className: string, moduleName: string, start: Date, end: Date) {
-    const ratingsCollection = this.afs.collection<Rating>(`ratings/${className}/rating`);
+  startRating(teacher: string, classId: string, moduleId: string, start: Date, end: Date) {
+    const ratingsCollection = this.afs.collection<Rating>(`to_rate`);
     const ratingsData: Rating = {
       teacher: teacher,
-      className: className,
-      moduleName: moduleName,
+      classId: classId,
+      moduleId: moduleId,
       start: start,
       end: end
     };

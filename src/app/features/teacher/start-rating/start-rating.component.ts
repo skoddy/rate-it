@@ -5,6 +5,7 @@ import { AuthService } from '@app/core/services/auth/auth.service';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SelectClassService } from '@app/shared/select-class/select-class.service';
 
 @Component({
   selector: 'app-start-rating',
@@ -21,15 +22,20 @@ export class StartRatingComponent implements OnInit {
   classes: Class[];
   modules: Modul[];
   user: User;
-  className: string;
-  moduleName: string;
+  classId: string;
+  moduleId: string;
   startDate: any;
   endDate: any;
 
   constructor(private teacherService: TeacherService,
     private auth: AuthService,
-    public fb: FormBuilder) {
+    public fb: FormBuilder,
+    private selectClassService: SelectClassService) {
     this.getUser();
+    this.selectClassService.selectedClass$.subscribe((classId) => {
+      this.classId = classId;
+    }
+    );
   }
 
   ngOnInit() {
@@ -45,14 +51,14 @@ export class StartRatingComponent implements OnInit {
   getUser() {
     return this.auth.user$.subscribe(user => (this.user = user));
   }
-  
+
   startRating() {
-     this.teacherService.startRating(
+    this.teacherService.startRating(
       this.user.displayName,
-      this.className,
-      this.moduleName,
+      this.classId,
+      this.moduleId,
       this.startDate.toDate(),
       this.endDate.toDate()
-    ); 
+    );
   }
 }

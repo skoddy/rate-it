@@ -21,13 +21,13 @@
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Von</mat-label>
-              <input matInput [matDatepicker]="start" placeholder="Von" [(ngModel)]="startDate">
+              <input name="module-start" matInput [matDatepicker]="start" placeholder="Von" [(ngModel)]="startDate">
               <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
               <mat-datepicker #start></mat-datepicker>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Bis</mat-label>
-              <input matInput [matDatepicker]="end" placeholder="Bis" [(ngModel)]="endDate">
+              <input name="module-end" matInput [matDatepicker]="end" placeholder="Bis" [(ngModel)]="endDate">
               <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
               <mat-datepicker #end></mat-datepicker>
             </mat-form-field>

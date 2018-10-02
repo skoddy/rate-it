@@ -11,8 +11,8 @@ export class NewUserComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<NewUserComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private selectClassService: SelectClassService) {
-    this.selectClassService.selectedClass$.subscribe((classId) => {
-      this.data.classId = classId;
+    this.selectClassService.selectedClass$.subscribe((className) => {
+      this.data.className = className;
     }
     );
   }
@@ -22,8 +22,9 @@ export class NewUserComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close(this.data);
   }
-
+  
   close() {
+    console.log(this.data);
     this.dialogRef.close();
   }
 

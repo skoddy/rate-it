@@ -13,8 +13,8 @@
 
             <mat-form-field  appearance="fill">
                 <mat-label>Modul</mat-label>
-              <mat-select placeholder="Modul" [(ngModel)]="moduleId">
-                <mat-option *ngFor="let module of modules" [value]="module.id">
+              <mat-select placeholder="Modul" [(ngModel)]="moduleName">
+                <mat-option *ngFor="let module of modules" [value]="module.name">
                   {{module.name}}
                 </mat-option>
               </mat-select>

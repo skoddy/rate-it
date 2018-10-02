@@ -4,12 +4,11 @@ import { User, Class, Modul } from '@app/data-model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from '@app/core/services/auth/auth.service';
-import { AdminModule } from '@app/features/admin/admin.module';
 
 // Register  the provider in the module. New in Angular 6.
 
 @Injectable({
-  providedIn: AdminModule
+  providedIn: 'root'
 })
 
 export class AdminService {
@@ -70,8 +69,8 @@ export class AdminService {
     return this.userDoc.valueChanges();
   }
 
-  newUser(email: string, displayName: string, password: string, role: string, classId?: string) {
-    return this.auth.createUserWithEmailAndPasswordAsAdmin(email, displayName, password, role, classId);
+  newUser(email: string, displayName: string, password: string, role: string, className?: string) {
+    return this.auth.createUserWithEmailAndPasswordAsAdmin(email, displayName, password, role, className);
   }
 
   newClass(name: string, info: string) {

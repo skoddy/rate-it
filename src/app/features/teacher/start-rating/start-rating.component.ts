@@ -22,8 +22,8 @@ export class StartRatingComponent implements OnInit {
   classes: Class[];
   modules: Modul[];
   user: User;
-  classId: string;
-  moduleId: string;
+  className: string;
+  moduleName: string;
   startDate: any;
   endDate: any;
 
@@ -32,8 +32,8 @@ export class StartRatingComponent implements OnInit {
     public fb: FormBuilder,
     private selectClassService: SelectClassService) {
     this.getUser();
-    this.selectClassService.selectedClass$.subscribe((classId) => {
-      this.classId = classId;
+    this.selectClassService.selectedClass$.subscribe((className) => {
+      this.className = className;
     }
     );
   }
@@ -55,8 +55,8 @@ export class StartRatingComponent implements OnInit {
   startRating() {
     this.teacherService.startRating(
       this.user.displayName,
-      this.classId,
-      this.moduleId,
+      this.className,
+      this.moduleName,
       this.startDate.toDate(),
       this.endDate.toDate()
     );

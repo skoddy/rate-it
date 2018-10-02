@@ -50,7 +50,7 @@ export class ManageUsersComponent implements OnInit {
           result.displayName,
           result.password,
           result.role,
-          result.classId
+          result.className
         );
       }
     });
@@ -64,13 +64,5 @@ export class ManageUsersComponent implements OnInit {
     }
   }
 
-  createUser(email: string, name: string, password: string, role: string) {
-    console.log('create user');
-    this.adminService.newUser(
-      email,
-      name,
-      password,
-      role);
-  }
 }
 

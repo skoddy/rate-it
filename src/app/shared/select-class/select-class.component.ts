@@ -11,11 +11,11 @@ import { SelectClassService } from '@app/shared/select-class/select-class.servic
 export class SelectClassComponent implements OnInit {
 
   classes: Class[];
-  classId: string;
+  className: string;
   public data: any;
   constructor(public selectClassService: SelectClassService) {
     this.selectClassService.selectedClass(this.data);
-    this.data = this.classId;
+    this.data = this.className;
   }
 
   ngOnInit() {

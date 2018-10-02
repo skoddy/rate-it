@@ -11,7 +11,7 @@ export interface User {
     displayName: string;
     photoURL: string;
     createdAt: Date;
-    classId?: string;
+    className?: string;
     roles: Roles;
 }
 
@@ -28,8 +28,8 @@ export interface Modul {
 
 export interface Rating {
     teacher: string;
-    classId: string;
-    moduleId: string;
+    className: string;
+    moduleName: string;
     start: Date;
     end: Date;
 }

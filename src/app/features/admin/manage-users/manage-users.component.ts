@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '@app/data-model';
 import { AdminService } from '@app/features/admin/admin.service';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
-import { NewUserComponent } from '@app/features/admin/dialogs/new-user/new-user.component';
+import { NewUserComponent } from '@app/features/admin/manage-users/new-user/new-user.component';
 
 @Component({
   selector: 'app-manage-users',

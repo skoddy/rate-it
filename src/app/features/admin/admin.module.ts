@@ -6,15 +6,15 @@ import { AdminComponent } from '@app/features/admin/admin.component';
 import { SharedModule } from '@app/shared/shared.module';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '@env/environment';
-import { NewUserComponent } from './dialogs/new-user/new-user.component';
 import { MyTableComponent } from './my-table/my-table.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageClassesComponent } from './manage-classes/manage-classes.component';
 import { ManageModulesComponent } from './manage-modules/manage-modules.component';
 import { ManageRatingsComponent } from './manage-ratings/manage-ratings.component';
-import { NewClassComponent } from './dialogs/new-class/new-class.component';
-import { NewModulComponent } from './dialogs/new-modul/new-modul.component';
+import { NewUserComponent } from '@app/features/admin/manage-users/new-user/new-user.component';
+import { NewModulComponent } from '@app/features/admin/manage-modules/new-modul/new-modul.component';
+import { NewClassComponent } from '@app/features/admin/manage-classes/new-class/new-class.component';
 
 @NgModule({
   imports: [

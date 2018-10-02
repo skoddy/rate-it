@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { AdminService } from '@app/features/admin/admin.service';
 import { Class } from '@app/data-model';
-import { NewClassComponent } from '@app/features/admin/dialogs/new-class/new-class.component';
+import { NewClassComponent } from '@app/features/admin/manage-classes/new-class/new-class.component';
 
 @Component({
   selector: 'app-manage-classes',

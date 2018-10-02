@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource, MatDialog } from '@angular/material';
 import { AdminService } from '@app/features/admin/admin.service';
 import { Modul } from '@app/data-model';
-import { NewModulComponent } from '@app/features/admin/dialogs/new-modul/new-modul.component';
+import { NewModulComponent } from '@app/features/admin/manage-modules/new-modul/new-modul.component';
 
 @Component({
   selector: 'app-manage-modules',

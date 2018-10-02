@@ -1,5 +1,6 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-new-class',
@@ -9,21 +10,25 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 export class NewClassComponent implements OnInit {
 
+  form: FormGroup;
+
   constructor(public dialogRef: MatDialogRef<NewClassComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    public fb: FormBuilder) {
+
+    this.form = fb.group({
+      'className': ['', Validators.required],
+      'info': ''
+    });
+  }
 
   ngOnInit() {
   }
 
   onNoClick(): void {
-    this.dialogRef.close(this.data);
-  }
-
-  close() {
     this.dialogRef.close();
   }
 
-  save() {
-    this.dialogRef.close(this.data);
+  onSubmit(form) {
+    this.dialogRef.close(form.value);
   }
 }

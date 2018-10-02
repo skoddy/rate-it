@@ -1,21 +1,33 @@
 .container {
   margin: 20px;
 }
-  table {
-    width: 100%;
-  }
-  
-  .mat-form-field {
-    font-size: 14px;
-    width: 100%;
-  }
-  
-  td, th {
-    width: 25%;
-  }
-  .add-button-icon {
-    margin-right: 8px;
-  }
-  .search-field {
-    margin-top: 16px;
-  }
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td,
+th {
+  width: 25%;
+}
+
+.add-button-icon {
+  margin-right: 8px;
+}
+
+.search-field {
+  margin-top: 16px;
+}
+
+tr.row:not(.example-expanded-row):hover {
+  background: #f5f5f5;
+}
+
+tr.row:not(.example-expanded-row):active {
+  background: #efefef;
+}

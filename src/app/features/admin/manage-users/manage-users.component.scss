@@ -20,6 +20,13 @@
   .search-field {
     margin-top: 16px;
   }
+  tr.row:not(.example-expanded-row):hover {
+    background: #f5f5f5;
+  }
+  
+  tr.row:not(.example-expanded-row):active {
+    background: #efefef;
+  }
 /*   mat-dialog-content {
     max-width: 480px;
     min-width: 300px;

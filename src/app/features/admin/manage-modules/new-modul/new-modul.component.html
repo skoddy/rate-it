@@ -5,12 +5,12 @@
   <div class="new-modul-container">
     <mat-form-field appearance="fill">
       <mat-label>Modul Name</mat-label>
-      <input name="modul-name" matInput [(ngModel)]="data.name" required>
+      <input autocomplete="off" name="modul-name" matInput [(ngModel)]="data.name" required>
     </mat-form-field>
 
   </div>
 </mat-card-content>
 <mat-dialog-actions align="end">
-  <button class="mat-raised-button" (click)="close()">Close</button>
-  <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
+  <button class="mat-flat-button" (click)="close()">Close</button>
+  <button class="mat-flat-button mat-primary" (click)="save()">Save</button>
 </mat-dialog-actions>

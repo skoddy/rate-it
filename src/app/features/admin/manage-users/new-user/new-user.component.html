@@ -2,48 +2,48 @@
   Benutzer hinzufügen
 </h2>
 <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
-<mat-card-content>
-  <div class="new-user-container">
+  <mat-card-content>
+    <div class="new-user-container">
       <mat-card-subtitle>
-          Stammdaten
-        </mat-card-subtitle>
-    <mat-radio-group formControlName="title" required>
+        Stammdaten
+      </mat-card-subtitle>
+      <mat-radio-group formControlName="title" required>
         <mat-radio-button value="Herr" class="radio-button">Herr</mat-radio-button>
         <mat-radio-button value="Frau" class="radio-button">Frau</mat-radio-button>
       </mat-radio-group>
       <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
-        <input name="name" matInput formControlName="displayName" required>
+        <input name="name" matInput formControlName="displayName" autocomplete="off" required>
       </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Rolle</mat-label>
-      <mat-select placeholder="Rolle" formControlName="role" required>
-        <mat-option value="admin">Admin</mat-option>
-        <mat-option value="office">Office</mat-option>
-        <mat-option value="teacher">Dozent</mat-option>
-        <mat-option value="student">Schüler</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <div *ngIf="form.value.role=='student'">
-      <app-select-class></app-select-class>
+      <mat-form-field appearance="fill">
+        <mat-label>Rolle</mat-label>
+        <mat-select placeholder="Rolle" formControlName="role" required>
+          <mat-option value="admin">Admin</mat-option>
+          <mat-option value="office">Office</mat-option>
+          <mat-option value="teacher">Dozent</mat-option>
+          <mat-option value="student">Schüler</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div *ngIf="form.value.role=='student'">
+        <app-select-class></app-select-class>
+      </div>
+      <mat-card-subtitle>
+        Login-Daten
+      </mat-card-subtitle>
+      <mat-form-field appearance="fill">
+        <mat-label>E-Mail-Adresse</mat-label>
+        <input autocomplete="off" name="email" matInput formControlName="email" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Passwort</mat-label>
+        <input autocomplete="off" name="password" matInput formControlName="password" required>
+      </mat-form-field>
+
+
     </div>
-    <mat-card-subtitle>
-      Login-Daten
-    </mat-card-subtitle>
-    <mat-form-field appearance="fill">
-      <mat-label>E-Mail-Adresse</mat-label>
-      <input name="email" matInput formControlName="email" required>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Passwort</mat-label>
-      <input name="password" matInput formControlName="password" required>
-    </mat-form-field>
-
-
-  </div>
-</mat-card-content>
-<mat-dialog-actions align="end">
-  <button class="mat-raised-button" (click)="close()">Close</button>
-  <button class="mat-raised-button mat-primary" type="submit" [disabled]="!form.valid">Save</button>
-</mat-dialog-actions>
+  </mat-card-content>
+  <mat-dialog-actions align="end">
+    <button class="mat-flat-button" mat-dialog-close>Close</button>
+    <button class="mat-flat-button mat-primary" type="submit" [disabled]="!form.valid">Save</button>
+  </mat-dialog-actions>
 </form>

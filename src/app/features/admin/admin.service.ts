@@ -73,10 +73,10 @@ export class AdminService {
     return this.auth.createUserWithEmailAndPasswordAsAdmin(email, title, displayName, password, role, className);
   }
 
-  newClass(name: string, info: string) {
+  newClass(className: string, info: string) {
     const classesCollection = this.afs.collection<Class>('classes');
     const classData: Class = {
-      name: name,
+      name: className,
       info: info
     };
     classesCollection.add(classData);

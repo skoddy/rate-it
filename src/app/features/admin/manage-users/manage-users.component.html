@@ -1,13 +1,14 @@
 <div class="container">
 <h1 class="mat-h1">Benutzer</h1>
-<mat-card>
-  <button  mat-stroked-button (click)="openDialog()" color="primary">
+
+  <button  mat-raised-button (click)="openDialog()" color="primary">
     <mat-icon class="add-button-icon">person_add</mat-icon> Benutzer hinzufügen
   </button>
   <mat-form-field class="search-field">
     <input name="user-search" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
-
+</div>
+<div class="container mat-elevation-z8">
   <table mat-table [dataSource]="userDataSource" matSort matSortActive="displayName" matSortDirection="asc">
 
     <!-- Name Column -->
@@ -29,10 +30,10 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    <tr mat-row class="row" *matRowDef="let row; columns: displayedColumns;">
     </tr>
   </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-</mat-card>
+
 </div>

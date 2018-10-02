@@ -15,7 +15,7 @@ export class NewUserComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<NewUserComponent>,
     private selectClassService: SelectClassService,
-    fb: FormBuilder) {
+    public fb: FormBuilder) {
 
     this.selectClassService.selectedClass$.subscribe((className) => {
       this.form.controls['className'].setValue(className);
@@ -34,17 +34,12 @@ export class NewUserComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(form) {
+  onSubmit(form): void {
     console.log(form.value);
-    // this.dialogRef.close(form.value);
+    this.dialogRef.close(form.value);
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  close() {
-    console.log();
     this.dialogRef.close();
   }
 }

@@ -3,6 +3,17 @@
 </h2>
 <mat-card-content>
   <div class="new-user-container">
+      <mat-card-subtitle>
+          Stammdaten
+        </mat-card-subtitle>
+    <mat-radio-group [(ngModel)]="data.title" required>
+        <mat-radio-button value="Herr" class="radio-button">Herr</mat-radio-button>
+        <mat-radio-button value="Frau" class="radio-button">Frau</mat-radio-button>
+      </mat-radio-group>
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input name="name" matInput [(ngModel)]="data.displayName" required>
+      </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Rolle</mat-label>
       <mat-select placeholder="Rolle" [(ngModel)]="data.role" required>
@@ -15,13 +26,12 @@
     <div *ngIf="data.role=='student'">
       <app-select-class></app-select-class>
     </div>
+    <mat-card-subtitle>
+      Login-Daten
+    </mat-card-subtitle>
     <mat-form-field appearance="fill">
       <mat-label>E-Mail-Adresse</mat-label>
       <input name="email" matInput [(ngModel)]="data.email" required>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Name</mat-label>
-      <input name="name" matInput [(ngModel)]="data.displayName" required>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Passwort</mat-label>

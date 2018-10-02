@@ -69,8 +69,8 @@ export class AdminService {
     return this.userDoc.valueChanges();
   }
 
-  newUser(email: string, displayName: string, password: string, role: string, className?: string) {
-    return this.auth.createUserWithEmailAndPasswordAsAdmin(email, displayName, password, role, className);
+  newUser(email: string, title:string, displayName: string, password: string, role: string, className?: string) {
+    return this.auth.createUserWithEmailAndPasswordAsAdmin(email, title, displayName, password, role, className);
   }
 
   newClass(name: string, info: string) {

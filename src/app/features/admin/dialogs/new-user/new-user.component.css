@@ -6,3 +6,9 @@
   .new-user-container > * {
     width: 100%;
   }
+
+  
+  .radio-button {
+    margin: 5px;
+    margin-bottom: 16px;
+  }

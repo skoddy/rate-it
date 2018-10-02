@@ -1,7 +1,21 @@
-<mat-card>
-  <mat-nav-list>
-    <a mat-list-item href="..." *ngFor="let rate of toRate">
-      {{ rate.moduleName }} for {{ rate.teacher }}
-    </a>
-  </mat-nav-list>
-</mat-card>
+<div class="outer">
+  <div class="middle">
+    <div class="inner">
+      <div *ngFor="let rate of toRate">
+
+          <mat-card>
+            <mat-card-title>
+              {{ rate.moduleName }} 
+            </mat-card-title>
+            <mat-card-subtitle>
+                Dozent: {{ rate.teacher }}
+            </mat-card-subtitle>
+            <mat-card-actions align="end">
+              <button mat-button>Bewertung starten</button>
+            </mat-card-actions>
+          </mat-card>
+
+      </div>
+    </div>
+  </div>
+</div>

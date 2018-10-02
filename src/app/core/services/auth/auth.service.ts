@@ -73,6 +73,7 @@ export class AuthService {
 
   createUserWithEmailAndPasswordAsAdmin(
     email: string,
+    title:string,
     displayName: string,
     password: string,
     role: string,
@@ -88,7 +89,7 @@ export class AuthService {
     return secondaryApp.auth()
       .createUserWithEmailAndPassword(email, password)
       .then((credential) => {
-        this.setUserData(credential.user, displayName, role, className);
+        this.setUserData(credential.user, title, displayName, role, className);
         secondaryApp.auth().signOut();
         secondaryApp.delete()
           .then(function () {
@@ -113,12 +114,13 @@ export class AuthService {
     console.error(error);
   }
 
-  private setUserData(user, displayName, role, className?: string) {
+  private setUserData(user, title, displayName, role, className?: string) {
 
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     const data: User = {
       uid: user.uid,
       email: user.email || null,
+      title: title,
       displayName: displayName,
       photoURL: user.photoURL || 'https://goo.gl/Fz9nrQ',
       createdAt: new Date(),

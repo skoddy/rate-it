@@ -47,6 +47,7 @@ export class ManageUsersComponent implements OnInit {
       if (result) {
         this.adminService.newUser(
           result.email,
+          result.title,
           result.displayName,
           result.password,
           result.role,

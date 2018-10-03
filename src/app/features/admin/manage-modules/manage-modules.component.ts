@@ -3,6 +3,7 @@ import { MatPaginator, MatSort, MatTableDataSource, MatDialog } from '@angular/m
 import { AdminService } from '@app/features/admin/admin.service';
 import { Modul } from '@app/data-model';
 import { NewModulComponent } from '@app/features/admin/manage-modules/new-modul/new-modul.component';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-manage-modules',
@@ -14,8 +15,9 @@ export class ManageModulesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns: string[] = ['name'];
+  displayedColumns: string[] = ['select', 'name'];
   modulDataSource: MatTableDataSource<Modul>;
+  selection = new SelectionModel<Modul>(true, []);
 
   constructor(
     private adminService: AdminService,
@@ -57,5 +59,23 @@ export class ManageModulesComponent implements OnInit {
     if (this.modulDataSource.paginator) {
       this.modulDataSource.paginator.firstPage();
     }
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.modulDataSource.data.length;
+    console.log(numSelected);
+    if (numSelected > 0) {
+
+    }
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.modulDataSource.data.forEach(row => this.selection.select(row));
   }
 }

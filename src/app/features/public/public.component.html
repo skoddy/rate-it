@@ -1,11 +1,17 @@
-<div class="outer">
+<div class="outer login-background">
   <div class="middle">
     <div class="inner">
       <main>
         <section>
-          <mat-card class="mat-elevation-z8">
+          <mat-card  class="mat-elevation-z0">
             <form [formGroup]="signInForm" (ngSubmit)="signIn()">
-              <h3>Anmelden</h3>
+
+              <mat-card-title>
+                  Anmelden
+              </mat-card-title>
+              <mat-card-subtitle>
+                Sollten Sie einen Zugang benötigen, wenn Sie sich bitte an die GPB.
+              </mat-card-subtitle>
               <mat-card-content>
                 <mat-form-field [formGroup]="signInForm">
                   <input matInput name="email" placeholder="E-Mail" [formControl]="email" required>

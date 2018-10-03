@@ -1,14 +1,12 @@
-<div class="container">
-<h1 class="mat-h1">Benutzer</h1>
-
-  <button  mat-raised-button (click)="openDialog()" color="primary">
-    <mat-icon class="add-button-icon">person_add</mat-icon> Benutzer hinzufügen
-  </button>
+<div class="content-header">
+<h1 class="mat-h1 content-title">Benutzer</h1>
+</div>
+<div class="content-container">
   <mat-form-field class="search-field">
     <input name="user-search" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
 </div>
-<div class="container mat-elevation-z8">
+<div class="content-container mat-elevation-z8">
   <table mat-table [dataSource]="userDataSource" matSort matSortActive="displayName" matSortDirection="asc">
 
     <!-- Name Column -->
@@ -23,12 +21,6 @@
       <td mat-cell *matCellDef="let row"> {{row.email}} </td>
     </ng-container>
 
-    <!-- Role Column -->
-    <ng-container matColumnDef="roles">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Zugang </th>
-      <td mat-cell *matCellDef="let row"> {{row.roles.role}} </td>
-    </ng-container>
-
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row class="row" *matRowDef="let row; columns: displayedColumns;">
     </tr>
@@ -37,3 +29,6 @@
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 
 </div>
+<button class="add-button"  mat-fab (click)="openDialog()" color="accent">
+  <mat-icon>add</mat-icon>
+</button>

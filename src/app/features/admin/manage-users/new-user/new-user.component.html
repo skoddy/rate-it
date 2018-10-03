@@ -24,9 +24,9 @@
           <mat-option value="student">Schüler</mat-option>
         </mat-select>
       </mat-form-field>
-      <div *ngIf="form.value.role=='student'">
-        <app-select-class></app-select-class>
-      </div>
+
+        <app-select-class *ngIf="form.value.role=='student'"></app-select-class>
+ 
       <mat-card-subtitle>
         Login-Daten
       </mat-card-subtitle>

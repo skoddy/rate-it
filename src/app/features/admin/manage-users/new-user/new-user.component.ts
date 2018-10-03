@@ -24,7 +24,7 @@ export class NewUserComponent implements OnInit {
     this.form = fb.group({
       'title': ['', Validators.required],
       'displayName': ['', Validators.required],
-      'email': ['', Validators.required],
+      email: ['', [Validators.email, Validators.required]],
       'role': ['', Validators.required],
       'password': ['', Validators.required],
       'className': ['']
@@ -35,6 +35,9 @@ export class NewUserComponent implements OnInit {
   }
 
   onSubmit(form): void {
+    if (form.value.role !== 'student') {
+      form.value.className = undefined;
+    }
     console.log(form.value);
     this.dialogRef.close(form.value);
   }

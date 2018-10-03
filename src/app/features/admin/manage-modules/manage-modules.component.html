@@ -1,15 +1,14 @@
-<div class="container">
-<h1 class="mat-h1">Module</h1>
+<div class="content-header">
+<h1 class="mat-h1 content-title">Module</h1>
+</div>
+<div class="content-container">
 
-<button mat-raised-button (click)="openDialog()" color="primary">
-  <mat-icon class="add-button-icon">person_add</mat-icon> Modul hinzufügen
-</button>
 
 <mat-form-field class="search-field">
   <input name="user-search" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 </mat-form-field>
 </div>
-<div class="container mat-elevation-z8">
+<div class="content-container mat-elevation-z8">
 
   <table mat-table [dataSource]="modulDataSource" matSort matSortActive="name" matSortDirection="asc">
 
@@ -24,7 +23,10 @@
     <tr mat-row class="row" *matRowDef="let row; columns: displayedColumns;">
     </tr>
   </table>
-
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 
+
 </div>
+<button class="add-button" mat-fab (click)="openDialog()" color="accent">
+  <mat-icon>add</mat-icon>
+</button>

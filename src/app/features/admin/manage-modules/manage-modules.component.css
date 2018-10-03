@@ -33,9 +33,7 @@ table {
   font-size: 14px;
   width: 100%;
 }
-.mat-cell:first-of-type {
-  width: 50px;
-}
+
 td,
 th {
   cursor: pointer;

@@ -12,16 +12,15 @@ export class SelectClassService {
   selectedClass$: Observable<any>;
   private selectedClassSubject = new Subject<any>();
   classCollection: AngularFirestoreCollection<Class>;
-  modulCollection: AngularFirestoreCollection<Modul>;
   userDoc: AngularFirestoreDocument<User>;
   constructor(private afs: AngularFirestore) {
-    this.classCollection = this.afs.collection('classes');
-    this.modulCollection = this.afs.collection('modules');
+    this.classCollection = this.afs.collection('classes', ref =>
+      ref.orderBy('name'));
     this.selectedClass$ = this.selectedClassSubject.asObservable();
   }
   selectedClass(data) {
     this.selectedClassSubject.next(data);
-}
+  }
   getClasses(): Observable<Class[]> {
     return this.classCollection.snapshotChanges().pipe(
       map(actions => {

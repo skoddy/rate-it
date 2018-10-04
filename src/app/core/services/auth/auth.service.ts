@@ -145,18 +145,18 @@ export class AuthService {
     return this.afs.firestore.runTransaction(transaction =>
 
       transaction.get(classDocRef).then(classDoc => {
-        
+
         const newStudentCount = classDoc.data().students + 1;
 
         if (newStudentCount <= 100) {
           transaction.update(classDocRef, { students: newStudentCount });
           return newStudentCount;
         } else {
-          return Promise.reject("Anzahl der Studenten von 100 überschritten.")
+          return Promise.reject('Anzahl der Studenten von 100 überschritten.');
         }
 
       }))
-      .then(newCount => console.log("Anzahl Schüler erhöht: " + newCount)
+      .then(newCount => console.log('Anzahl Schüler erhöht: ' + newCount)
       ).catch(err => console.log(err));
   }
   // determines if user has matching role

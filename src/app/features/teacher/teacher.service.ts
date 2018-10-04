@@ -14,20 +14,9 @@ export class TeacherService {
   modulCollection: AngularFirestoreCollection<Modul>;
   userDoc: AngularFirestoreDocument<User>;
   constructor(private afs: AngularFirestore, private auth: AuthService) {
-    this.classCollection = this.afs.collection('classes');
-    this.modulCollection = this.afs.collection('modules');
-  }
 
-  getClasses(): Observable<Class[]> {
-    return this.classCollection.snapshotChanges().pipe(
-      map(actions => {
-        return actions.map(a => {
-          const data = a.payload.doc.data() as Class;
-          const id = a.payload.doc.id;
-          return { id, ...data };
-        });
-      })
-    );
+    this.modulCollection = this.afs.collection('modules', ref =>
+      ref.orderBy('name'));
   }
 
   getModules(): Observable<Modul[]> {

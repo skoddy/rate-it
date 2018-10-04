@@ -1,0 +1,12 @@
+.stepper {
+    max-width: 600px;
+    margin: 16px;
+}
+
+  .teacher-name {
+      margin-bottom: 16px;
+  }
+
+  mat-form-field {
+    display: block;
+}

@@ -20,7 +20,6 @@ import { SelectClassService } from '@app/shared/select-class/select-class.servic
 
 export class StartRatingComponent implements OnInit {
 
-  classes: Class[];
   modules: Modul[];
   user: User;
   classId: string;
@@ -41,9 +40,7 @@ export class StartRatingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.teacherService.getClasses().subscribe(classes => {
-      this.classes = classes;
-    });
+
 
     this.teacherService.getModules().subscribe(modules => {
       this.modules = modules;

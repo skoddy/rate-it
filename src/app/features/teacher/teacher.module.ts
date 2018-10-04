@@ -5,6 +5,7 @@ import { TeacherRoutingModule } from './teacher-routing.module';
 import { TeacherComponent } from '@app/features/teacher/teacher.component';
 import { SharedModule } from '@app/shared/shared.module';
 import { StartRatingComponent } from './start-rating/start-rating.component';
+import { TeacherDashboardComponent } from './teacher-dashboard/teacher-dashboard.component';
 
 @NgModule({
   imports: [
@@ -12,6 +13,6 @@ import { StartRatingComponent } from './start-rating/start-rating.component';
     TeacherRoutingModule,
     SharedModule
   ],
-  declarations: [TeacherComponent, StartRatingComponent]
+  declarations: [TeacherComponent, StartRatingComponent, TeacherDashboardComponent]
 })
 export class TeacherModule { }

@@ -1,0 +1,17 @@
+<div *ngFor="let rating of openRatings">
+  <mat-card>
+    <mat-card-title>
+      {{ rating.moduleName }} 
+    </mat-card-title>
+    <mat-card-subtitle>
+        Dozent: {{ rating.teacher }}
+    </mat-card-subtitle>
+    <mat-card-content>
+      Bewertung läuft..
+      Abgegeben 0 / {{eligibleStudents}}
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button>Bewertung beenden</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

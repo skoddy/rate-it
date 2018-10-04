@@ -17,8 +17,8 @@ export class NewUserComponent implements OnInit {
     private selectClassService: SelectClassService,
     public fb: FormBuilder) {
 
-    this.selectClassService.selectedClass$.subscribe((className) => {
-      this.form.controls['className'].setValue(className);
+    this.selectClassService.selectedClass$.subscribe((classId) => {
+      this.form.controls['classId'].setValue(classId);
     });
 
     this.form = fb.group({
@@ -27,7 +27,7 @@ export class NewUserComponent implements OnInit {
       email: ['', [Validators.email, Validators.required]],
       'role': ['', Validators.required],
       'password': ['', Validators.required],
-      'className': ['']
+      'classId': ['']
     });
   }
 

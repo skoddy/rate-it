@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Rating, User } from '@app/data-model';
 import { map } from 'rxjs/operators';
@@ -9,8 +9,6 @@ import { AuthService } from '@app/core/services/auth/auth.service';
   providedIn: 'root'
 })
 export class StudentService {
-
-  toRateCollection: AngularFirestoreCollection<Rating>;
 
   constructor(public afs: AngularFirestore, private auth: AuthService) {
 

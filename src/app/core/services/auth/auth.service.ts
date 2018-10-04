@@ -73,7 +73,7 @@ export class AuthService {
 
   createUserWithEmailAndPasswordAsAdmin(
     email: string,
-    title:string,
+    title: string,
     displayName: string,
     password: string,
     role: string,
@@ -114,7 +114,11 @@ export class AuthService {
     console.error(error);
   }
 
-  private setUserData(user, title, displayName, role, className?: string) {
+  private setUserData(user, title, displayName, role, classId?: string) {
+
+    if (role === 'student') {
+      this.increaseStudents(classId);
+    }
 
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     const data: User = {
@@ -124,7 +128,7 @@ export class AuthService {
       displayName: displayName,
       photoURL: user.photoURL || 'https://goo.gl/Fz9nrQ',
       createdAt: new Date(),
-      className: className ? className : '',
+      classId: classId ? classId : '',
       roles: {
         admin: (role === 'admin') ? true : false,
         office: (role === 'office') ? true : false,
@@ -135,6 +139,26 @@ export class AuthService {
     return userRef.set(data);
   }
 
+  private increaseStudents(classId: string) {
+    const classDocRef = this.afs.firestore.doc(`classes/${classId}`);
+
+    return this.afs.firestore.runTransaction(transaction =>
+
+      transaction.get(classDocRef).then(classDoc => {
+        
+        const newStudentCount = classDoc.data().students + 1;
+
+        if (newStudentCount <= 100) {
+          transaction.update(classDocRef, { students: newStudentCount });
+          return newStudentCount;
+        } else {
+          return Promise.reject("Anzahl der Studenten von 100 überschritten.")
+        }
+
+      }))
+      .then(newCount => console.log("Anzahl Schüler erhöht: " + newCount)
+      ).catch(err => console.log(err));
+  }
   // determines if user has matching role
   public checkAuthorization(user?: User) {
     const roles = ['admin', 'office', 'teacher', 'student'];

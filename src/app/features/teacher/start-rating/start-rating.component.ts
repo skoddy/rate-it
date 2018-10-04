@@ -19,10 +19,11 @@ import { SelectClassService } from '@app/shared/select-class/select-class.servic
 })
 
 export class StartRatingComponent implements OnInit {
+
   classes: Class[];
   modules: Modul[];
   user: User;
-  className: string;
+  classId: string;
   moduleName: string;
   startDate: any;
   endDate: any;
@@ -31,11 +32,12 @@ export class StartRatingComponent implements OnInit {
     private auth: AuthService,
     public fb: FormBuilder,
     private selectClassService: SelectClassService) {
+
     this.getUser();
-    this.selectClassService.selectedClass$.subscribe((className) => {
-      this.className = className;
-    }
-    );
+    this.selectClassService.selectedClass$.subscribe((classId) => {
+      this.classId = classId;
+    });
+
   }
 
   ngOnInit() {
@@ -55,7 +57,7 @@ export class StartRatingComponent implements OnInit {
   startRating() {
     this.teacherService.startRating(
       this.user.displayName,
-      this.className,
+      this.classId,
       this.moduleName,
       this.startDate.toDate(),
       this.endDate.toDate()

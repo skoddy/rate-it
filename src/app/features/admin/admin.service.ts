@@ -69,15 +69,16 @@ export class AdminService {
     return this.userDoc.valueChanges();
   }
 
-  newUser(email: string, title: string, displayName: string, password: string, role: string, className?: string) {
-    return this.auth.createUserWithEmailAndPasswordAsAdmin(email, title, displayName, password, role, className);
+  newUser(email: string, title: string, displayName: string, password: string, role: string, classId?: string) {
+    return this.auth.createUserWithEmailAndPasswordAsAdmin(email, title, displayName, password, role, classId);
   }
 
   newClass(className: string, info: string) {
     const classesCollection = this.afs.collection<Class>('classes');
     const classData: Class = {
       name: className,
-      info: info
+      info: info,
+      students: 0
     };
     classesCollection.add(classData);
   }

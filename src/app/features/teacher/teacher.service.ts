@@ -42,16 +42,33 @@ export class TeacherService {
     );
   }
 
+  getOpenRatings(ref, queryFn?): Observable<Rating[]> {
+    return this.afs.collection(ref, queryFn).snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data() as Rating;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        });
+      })
+    );
+  }
+
+  getEligibleStudents(classId): Observable<Class> {
+    const classDoc = this.afs.doc<Class>(`classes/${classId}`);
+    return classDoc.valueChanges();
+  }
+
   getCurrentUser() {
     this.userDoc = this.afs.doc<User>(`users/${this.auth.uid}`);
     return this.userDoc.valueChanges();
   }
 
-  startRating(teacher: string, className: string, moduleName: string, start: Date, end: Date) {
-    const ratingsCollection = this.afs.collection<Rating>(`to_rate`);
+  startRating(teacher: string, classId: string, moduleName: string, start: Date, end: Date) {
+    const ratingsCollection = this.afs.collection<Rating>('to_rate');
     const ratingsData: Rating = {
       teacher: teacher,
-      className: className,
+      classId: classId,
       moduleName: moduleName,
       start: start,
       end: end

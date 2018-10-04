@@ -9,7 +9,8 @@ const routes: Routes = [
     path: '', component: StudentComponent,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: RateComponent }
+      { path: 'dashboard', component: StudentDashboardComponent },
+      { path: 'rate', component: RateComponent }
     ]
   }
 ];

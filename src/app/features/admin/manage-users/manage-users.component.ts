@@ -51,7 +51,7 @@ export class ManageUsersComponent implements OnInit {
           result.displayName,
           result.password,
           result.role,
-          result.className
+          result.classId
         );
       }
     });

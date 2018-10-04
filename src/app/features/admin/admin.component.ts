@@ -12,15 +12,18 @@ import { AuthService } from '@app/core/services/auth/auth.service';
 export class AdminComponent implements OnInit {
 
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches)
-    );
+  isHandset$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.Handset)
+    .pipe(map(result => result.matches));
 
-  constructor(private breakpointObserver: BreakpointObserver, private auth: AuthService) { }
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private auth: AuthService) { }
+
   signOut() {
     this.auth.signOut();
   }
+
   ngOnInit() {
   }
 

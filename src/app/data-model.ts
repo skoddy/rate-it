@@ -12,7 +12,7 @@ export interface User {
     displayName: string;
     photoURL: string;
     createdAt: Date;
-    className?: string;
+    classId?: string;
     roles: Roles;
 }
 
@@ -20,6 +20,7 @@ export interface Class {
     id?: string;
     name: string;
     info: string;
+    students: number;
 }
 
 export interface Modul {
@@ -29,7 +30,7 @@ export interface Modul {
 
 export interface Rating {
     teacher: string;
-    className: string;
+    classId: string;
     moduleName: string;
     start: Date;
     end: Date;

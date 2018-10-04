@@ -6,10 +6,12 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 import { Observable, of } from 'rxjs';
-import { switchMap, take, map, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { User } from '@app/data-model';
 import { environment } from '@env/environment';
+
 @Injectable()
+
 export class AuthService {
 
   user$: Observable<User | null>;
@@ -46,9 +48,7 @@ export class AuthService {
   get displayName(): string {
     return this.authState.displayName || 'this.authState.email';
   }
-  get className(): string {
-    return this.authState.className || 'fehler';
-  }
+
   // Returns current user photo
   get photoURL(): string {
     return this.authState.photoURL || '';
@@ -57,11 +57,6 @@ export class AuthService {
   // Returns current user email
   get email(): string {
     return this.authState.email || '';
-  }
-
-  // Returns current user roles
-  get roles(): string {
-    return this.authState.roles || '';
   }
 
   signOut() {

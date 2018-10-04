@@ -44,7 +44,7 @@
   <mat-step [stepControl]="endRatingForm" [editable]="isEditable">
     <form [formGroup]="endRatingForm">
       <input style="display: none" formControlName="secondCtrl" required>
-      <ng-template matStepLabel>Fill out your address</ng-template>
+      <ng-template matStepLabel>Bewertung durchführen</ng-template>
       <div *ngIf="openRatings">
         <div *ngFor="let rating of openRatings">
           <mat-card>

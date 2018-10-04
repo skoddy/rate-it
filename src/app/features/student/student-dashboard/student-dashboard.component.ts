@@ -19,14 +19,14 @@ export class StudentDashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.auth.user$.subscribe(user => {
-      if(user) {
+      if (user) {
         console.log(user.classId);
         this.studentService.getToRateObjects('to_rate', ref =>
           ref.where('classId', '==', user.classId)).subscribe(data => {
             this.toRate = data;
           });
       }
-    })
+    });
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();

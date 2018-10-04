@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@app/core/services/auth/auth.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-teacher',
@@ -7,10 +8,11 @@ import { AuthService } from '@app/core/services/auth/auth.service';
   styleUrls: ['./teacher.component.css']
 })
 export class TeacherComponent implements OnInit {
-
-  constructor(private auth: AuthService) { }
+pageTitle = 'Teacher';
+  constructor(private auth: AuthService, private title: Title) { }
 
   ngOnInit() {
+    this.title.setTitle(this.pageTitle);
   }
   signOut() {
     this.auth.signOut();

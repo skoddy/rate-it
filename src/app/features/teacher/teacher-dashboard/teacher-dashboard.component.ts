@@ -7,6 +7,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SelectClassService } from '@app/shared/select-class/select-class.service';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-teacher-dashboard',
@@ -19,6 +20,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
   ],
 })
 export class TeacherDashboardComponent implements OnInit, OnDestroy {
+  pageTitle = 'Dashboard';
   openRatings: Rating[];
   user: User;
   subscription: Subscription;
@@ -38,7 +40,8 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private teacherService: TeacherService,
     private _formBuilder: FormBuilder,
-    private selectClassService: SelectClassService) {
+    private selectClassService: SelectClassService,
+    private title: Title) {
     this.getUser();
     this.selectClassService.selectedClass$.subscribe((classId) => {
       this.classId = classId;
@@ -46,6 +49,8 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    this.title.setTitle(this.title.getTitle() + ' - ' + this.pageTitle);
     this.startRatingForm = this._formBuilder.group({
       moduleName: ['', Validators.required],
       classId: '',
@@ -53,16 +58,14 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
       endDate: ['', Validators.required],
     });
 
-
     this.teacherService.getModules().subscribe(modules => {
       this.modules = modules;
     });
 
-
-
     this.endRatingForm = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
+
     this.subscription = this.auth.user$.subscribe((user: User) => {
       if (user) {
 
@@ -94,9 +97,11 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
       form.value.endDate
     );
   }
+
   setCompleted() {
     this.endRatingForm.controls['secondCtrl'].setValue('done');
   }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

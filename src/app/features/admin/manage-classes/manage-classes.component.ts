@@ -3,6 +3,7 @@ import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/m
 import { AdminService } from '@app/features/admin/admin.service';
 import { Class } from '@app/data-model';
 import { NewClassComponent } from '@app/features/admin/manage-classes/new-class/new-class.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-manage-classes',
@@ -12,6 +13,8 @@ import { NewClassComponent } from '@app/features/admin/manage-classes/new-class/
 
 export class ManageClassesComponent implements OnInit {
 
+  pageTitle = 'Klassen';
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -19,10 +22,12 @@ export class ManageClassesComponent implements OnInit {
   classDataSource: MatTableDataSource<Class>;
   constructor(
     private adminService: AdminService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(this.pageTitle);
     this.adminService.getClasses().subscribe((user: Class[]) => {
 
       // Assign the data to the data source for the table to render

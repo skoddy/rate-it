@@ -3,6 +3,7 @@ import { User } from '@app/data-model';
 import { AdminService } from '@app/features/admin/admin.service';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { NewUserComponent } from '@app/features/admin/manage-users/new-user/new-user.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-manage-users',
@@ -12,6 +13,8 @@ import { NewUserComponent } from '@app/features/admin/manage-users/new-user/new-
 
 export class ManageUsersComponent implements OnInit {
 
+  pageTitle = 'Benutzer';
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -20,10 +23,13 @@ export class ManageUsersComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(this.pageTitle);
+
     this.adminService.getUsers().subscribe((user: User[]) => {
 
       // Assign the data to the data source for the table to render

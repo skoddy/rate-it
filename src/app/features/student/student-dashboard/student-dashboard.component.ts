@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User, Rating } from '@app/data-model';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { StudentService } from '@app/features/student/student.service';
 import { AuthService } from '@app/core/services/auth/auth.service';
 

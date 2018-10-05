@@ -1,12 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from '@app/features/admin/admin.component';
 import { SharedModule } from '@app/shared/shared.module';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '@env/environment';
-import { MyTableComponent } from './my-table/my-table.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageClassesComponent } from './manage-classes/manage-classes.component';
@@ -15,7 +12,6 @@ import { ManageRatingsComponent } from './manage-ratings/manage-ratings.componen
 import { NewUserComponent } from '@app/features/admin/manage-users/new-user/new-user.component';
 import { NewModulComponent } from '@app/features/admin/manage-modules/new-modul/new-modul.component';
 import { NewClassComponent } from '@app/features/admin/manage-classes/new-class/new-class.component';
-import { SidenavService } from '@app/features/admin/sidenav.service';
 
 @NgModule({
   imports: [
@@ -32,7 +28,6 @@ import { SidenavService } from '@app/features/admin/sidenav.service';
     ManageClassesComponent,
     ManageModulesComponent,
     ManageRatingsComponent,
-    MyTableComponent,
     NewModulComponent
   ],
   providers: [],

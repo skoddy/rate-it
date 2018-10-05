@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MatSidenav, MatDrawerToggleResult } from '@angular/material';
-import { AdminModule } from '@app/features/admin/admin.module';
 
 @Injectable({
-  providedIn: AdminModule
+  providedIn: 'root'
 })
 export class SidenavService {
   private sideNav: MatSidenav;

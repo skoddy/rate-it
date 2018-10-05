@@ -15,6 +15,7 @@ import { ManageRatingsComponent } from './manage-ratings/manage-ratings.componen
 import { NewUserComponent } from '@app/features/admin/manage-users/new-user/new-user.component';
 import { NewModulComponent } from '@app/features/admin/manage-modules/new-modul/new-modul.component';
 import { NewClassComponent } from '@app/features/admin/manage-classes/new-class/new-class.component';
+import { SidenavService } from '@app/features/admin/sidenav.service';
 
 @NgModule({
   imports: [

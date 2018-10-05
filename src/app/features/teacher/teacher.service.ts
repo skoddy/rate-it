@@ -17,6 +17,8 @@ export class TeacherService {
 
     this.modulCollection = this.afs.collection('modules', ref =>
       ref.orderBy('name'));
+      this.classCollection = this.afs.collection('classes', ref =>
+      ref.orderBy('name'));
   }
 
   getModules(): Observable<Modul[]> {
@@ -30,7 +32,17 @@ export class TeacherService {
       })
     );
   }
-
+  getClasses(): Observable<Class[]> {
+    return this.classCollection.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data() as Class;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        });
+      })
+    );
+  }
   getOpenRatings(ref, queryFn?): Observable<Rating[]> {
     return this.afs.collection(ref, queryFn).snapshotChanges().pipe(
       map(actions => {
@@ -62,6 +74,6 @@ export class TeacherService {
       start: start,
       end: end
     };
-    ratingsCollection.add(ratingsData);
+    return ratingsCollection.add(ratingsData);
   }
 }

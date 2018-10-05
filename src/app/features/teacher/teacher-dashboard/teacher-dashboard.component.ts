@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { TeacherService } from '@app/features/teacher/teacher.service';
 import { Rating, User, Class, Modul } from '@app/data-model';
@@ -28,7 +28,10 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
 
   completed = false;
   startRatingForm: FormGroup;
+  startRatingCompleted = false;
   endRatingForm: FormGroup;
+  endRatingCompleted = false;
+  ratingCompleted = false;
   isEditable = false;
   classes: Class[];
   modules: Modul[];
@@ -36,7 +39,9 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
   moduleName: string;
   startDate: any;
   endDate: any;
-  @ViewChild('stepper') stepper: MatStepper;
+  processing: boolean;
+  currentIndex = 0;
+  isOptional = false;
   constructor(
     private auth: AuthService,
     private teacherService: TeacherService,
@@ -47,13 +52,13 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
+    this.processing = true;
     this.title.setTitle(this.title.getTitle() + ' - ' + this.pageTitle);
     this.startRatingForm = this._formBuilder.group({
-      moduleName: '',
-      classId: '',
-      startDate: '',
-      endDate: '',
+      moduleName: ['', Validators.required],
+      classId: ['', Validators.required],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
     });
 
 
@@ -77,22 +82,27 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
 
             if (openRating.length > 0) {
               console.log(openRating);
-              this.stepper.selectedIndex = 1;
+              this.isOptional = true;
+              this.startRatingCompleted = true;
+              this.currentIndex = 1;
             } else {
+              this.currentIndex = 0;
               this.setStartRatingForm();
             }
+            this.processing = false;
 
             this.openRatings = openRating;
             openRating.forEach(toRate => {
               this.teacherService.getEligibleStudents(toRate.classId).subscribe(classData => {
+
                 this.eligibleStudents = classData.students;
               });
             });
           });
-
       }
     });
   }
+
   setStartRatingForm() {
     this.startRatingForm = this._formBuilder.group({
       moduleName: ['', Validators.required],
@@ -113,15 +123,21 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
       form.value.startDate.toDate(),
       form.value.endDate.toDate()
     ).then(() => {
-      this.stepper.selectedIndex = 1;
-      // this.stepper.next();
+      stepper.next();
     });
   }
 
   setCompleted() {
+    this.endRatingCompleted = true;
     this.endRatingForm.controls['secondCtrl'].setValue('done');
   }
 
+  done(stepper: MatStepper) {
+    this.startRatingCompleted = false;
+    this.endRatingCompleted = false;
+    this.isOptional = false;
+    stepper.reset();
+  }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

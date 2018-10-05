@@ -14,3 +14,6 @@
 mat-form-field {
   display: block;
 }
+::ng-deep .mat-step-optional {
+  display: none;
+}

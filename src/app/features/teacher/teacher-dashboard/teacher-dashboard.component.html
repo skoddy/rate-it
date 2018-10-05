@@ -1,6 +1,7 @@
-<div class="stepper">
-  <mat-vertical-stepper linear #stepper>
-    <mat-step [stepControl]="startRatingForm" [editable]="isEditable" [completed]="true">
+<mat-spinner color="accent" *ngIf="processing"></mat-spinner>
+<div *ngIf="!processing" class="stepper">
+  <mat-vertical-stepper linear #stepper [selectedIndex]="currentIndex">
+    <mat-step [stepControl]="startRatingForm" [editable]="isEditable" [completed]="startRatingCompleted" [optional]="isOptional">
       <form [formGroup]="startRatingForm">
         <ng-template matStepLabel>Bewertung starten</ng-template>
         <div class="start-rating-container">
@@ -58,9 +59,12 @@
     </mat-step>
 
 
-    <mat-step [stepControl]="endRatingForm" [editable]="isEditable">
+    <mat-step [stepControl]="endRatingForm" [editable]="isEditable" [completed]="endRatingCompleted">
       <form [formGroup]="endRatingForm">
-        <input style="display: none" formControlName="secondCtrl" required>
+        <mat-form-field>
+
+          <input matInput formControlName="secondCtrl" required>
+        </mat-form-field>
         <ng-template matStepLabel>Bewertung durchführen</ng-template>
         <div *ngIf="openRatings">
           <div *ngFor="let rating of openRatings">
@@ -86,11 +90,11 @@
     </mat-step>
 
 
-    <mat-step>
+    <mat-step [completed]="ratingCompleted">
       <ng-template matStepLabel>Bewertung beendet</ng-template>
       You are now done.
       <div>
-        <button mat-button (click)="stepper.reset()">Reset</button>
+          <button mat-button (click)="done(stepper)">Fertig</button>
       </div>
     </mat-step>
   </mat-vertical-stepper>

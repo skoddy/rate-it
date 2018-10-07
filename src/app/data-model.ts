@@ -1,3 +1,5 @@
+import { DocumentReference } from '@angular/fire/firestore';
+
 export interface Roles {
     admin?: boolean;
     office?: boolean;
@@ -29,11 +31,6 @@ export interface Modul {
 }
 
 export interface SubmittedRating {
-    teacher: string;
-    classId: string;
-    moduleName: string;
-    start: Date;
-    end: Date;
     documents: number;
     exercises: number;
     software: number;
@@ -45,9 +42,9 @@ export interface SubmittedRating {
 }
 
 export interface Rating {
-    teacher: string;
-    classId: string;
-    moduleName: string;
+    teacherRef: DocumentReference;
+    classRef: DocumentReference;
+    moduleRef: DocumentReference;
     start: Date;
     end: Date;
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { TeacherService } from '@app/features/teacher/teacher.service';
 import { Rating, User, Class, Modul } from '@app/data-model';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -36,100 +36,89 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
   classes: Class[];
   modules: Modul[];
   classId: string;
-  moduleName: string;
+  moduleId: string;
   startDate: any;
   endDate: any;
   processing: boolean;
   currentIndex = 0;
   isOptional = false;
+  modules$: Modul[];
+
   constructor(
     private auth: AuthService,
     private teacherService: TeacherService,
     private _formBuilder: FormBuilder,
     private title: Title) {
     this.getUser();
-
   }
 
   ngOnInit() {
     this.processing = true;
     this.title.setTitle(this.title.getTitle() + ' - ' + this.pageTitle);
     this.startRatingForm = this._formBuilder.group({
-      moduleName: ['', Validators.required],
+      moduleId: ['', Validators.required],
       classId: ['', Validators.required],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
+      startRatingDone: ['', Validators.required]
     });
+
+
 
 
     this.teacherService.getClasses().subscribe(classes => {
       this.classes = classes;
     });
 
+    this.teacherService.getModulesTwo().subscribe(data => this.modules$ = data);
+
     this.teacherService.getModules().subscribe(modules => {
       this.modules = modules;
     });
 
     this.endRatingForm = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
+      endRatingDone: ['', Validators.required]
     });
 
-    this.subscription = this.auth.user$.subscribe((user: User) => {
-      if (user) {
 
-        this.teacherService.getOpenRatings('to_rate', ref =>
-          ref.where('teacher', '==', user.displayName)).subscribe((openRating) => {
+    this.subscription = this.teacherService.getOpenRatings()
+      .subscribe(openRating => {
 
-            if (openRating.length > 0) {
-              console.log(openRating);
-              this.isOptional = true;
-              this.startRatingCompleted = true;
-              this.currentIndex = 1;
-            } else {
-              this.currentIndex = 0;
-              this.setStartRatingForm();
-            }
-            this.processing = false;
+        if (openRating.length > 0) {
+          console.log(openRating);
+          this.isOptional = true;
+          this.startRatingCompleted = true;
+          this.currentIndex = 1;
+        } else {
+          this.currentIndex = 0;
+        }
+        this.processing = false;
+        this.openRatings = openRating;
+      });
 
-            this.openRatings = openRating;
-            openRating.forEach(toRate => {
-              this.teacherService.getEligibleStudents(toRate.classId).subscribe(classData => {
 
-                this.eligibleStudents = classData.students;
-              });
-            });
-          });
-      }
-    });
   }
 
-  setStartRatingForm() {
-    this.startRatingForm = this._formBuilder.group({
-      moduleName: ['', Validators.required],
-      classId: ['', Validators.required],
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
-    });
-  }
   getUser() {
     return this.auth.user$.subscribe(user => (this.user = user));
   }
 
   startRating(stepper: MatStepper, form) {
     this.teacherService.startRating(
-      this.user.displayName,
+      this.user.uid,
       form.value.classId,
-      form.value.moduleName,
+      form.value.moduleId,
       form.value.startDate.toDate(),
       form.value.endDate.toDate()
     ).then(() => {
+      this.startRatingForm.controls['startRatingDone'].setValue('done');
       stepper.next();
     });
   }
 
   setCompleted() {
     this.endRatingCompleted = true;
-    this.endRatingForm.controls['secondCtrl'].setValue('done');
+    this.endRatingForm.controls['endRatingDone'].setValue('done');
   }
 
   done(stepper: MatStepper) {

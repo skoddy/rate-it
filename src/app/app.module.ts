@@ -19,7 +19,7 @@ import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/mate
     BrowserModule,
     BrowserAnimationsModule,
     CoreModule,
-    AngularFireModule.initializeApp(environment.firebase, 'main-app'),
+    AngularFireModule.initializeApp(environment.firebase),
     LayoutModule,
     MatTableModule,
     MatPaginatorModule,

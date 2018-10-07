@@ -27,13 +27,8 @@ export class StudentService {
   }
 
   saveRating(form: SubmittedRating) {
-    const ratingsCollection = this.afs.collection<Rating>('to_rate');
+    const ratingsCollection = this.afs.collection<SubmittedRating>('to_rate');
     const ratingData: SubmittedRating = {
-      teacher: '',
-      classId: '',
-      moduleName: '',
-      start: new Date,
-      end: new Date,
       documents: form.documents,
       exercises: form.exercises,
       software: form.software,

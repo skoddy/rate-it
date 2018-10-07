@@ -10,6 +10,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { OfficeGuard } from '@app/core/services/auth/office.guard';
 import { TeacherGuard } from '@app/core/services/auth/teacher.guard';
 import { StudentGuard } from '@app/core/services/auth/student.guard';
+import { DatabaseService } from '@app/core/services/database/database.service';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { StudentGuard } from '@app/core/services/auth/student.guard';
     OfficeGuard,
     TeacherGuard,
     StudentGuard,
-    AuthService
+    AuthService,
+    DatabaseService
   ]
 })
 export class CoreModule { }

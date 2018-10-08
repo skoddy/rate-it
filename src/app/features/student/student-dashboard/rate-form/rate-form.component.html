@@ -1,15 +1,13 @@
+
 <div *ngIf="studentService.toRate as ratings">
     <div *ngFor="let rate of ratings">
  <form [formGroup]="rateForm">
-<mat-card class="rating-card">
-  <mat-card-title>
-    Bewertung des Moduls {{(rate.moduleRef | doc | async)?.name}}
-  </mat-card-title>
-  <mat-card-subtitle>
-      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-    </mat-card-subtitle>
-  <mat-card-content>
+
+    <h2 mat-dialog-title class="mat-typography">Bewertung des Moduls {{(rate.moduleRef | doc | async)?.name}}</h2>
+
+    <mat-dialog-content class="mat-typography">
+    
+
   <div class="rating-list">
     <div class="rating-item">
 
@@ -26,7 +24,7 @@
         <mat-button-toggle value="6">6</mat-button-toggle>
       </mat-button-toggle-group>
     </div>
-    <mat-divider [inset]="true"></mat-divider>
+    <mat-divider></mat-divider>
     <div class="rating-item">
 
       Die Übungen der Modulunterlagen waren verständlich und handlungsorientert.
@@ -42,7 +40,7 @@
         <mat-button-toggle value="6">6</mat-button-toggle>
       </mat-button-toggle-group>
     </div>
-    <mat-divider [inset]="true"></mat-divider>
+    <mat-divider></mat-divider>
     <div class="rating-item">
       Die Standart- und Lernsoftware wurden themen- und inhaltsbezogen eingesetzt.
     </div>
@@ -56,7 +54,7 @@
         <mat-button-toggle value="6">6</mat-button-toggle>
       </mat-button-toggle-group>
     </div>
-    <mat-divider [inset]="true"></mat-divider>
+    <mat-divider></mat-divider>
     <div class="rating-item">
       Die Unterstützung der Trainer war ergebnisorientiert.
     </div>
@@ -70,7 +68,7 @@
         <mat-button-toggle value="6">6</mat-button-toggle>
       </mat-button-toggle-group>
     </div>
-    <mat-divider [inset]="true"></mat-divider>
+    <mat-divider></mat-divider>
     <div class="rating-item">
       Die Konsultationen/Auswertungen der Trainer waren aufgaben- und situationsgerecht.
     </div>
@@ -84,7 +82,7 @@
         <mat-button-toggle value="6">6</mat-button-toggle>
       </mat-button-toggle-group>
     </div>
-    <mat-divider [inset]="true"></mat-divider>
+    <mat-divider></mat-divider>
     <div class="rating-item">
       Das Arbeitsklima war angenehm und leistungsfördernd beim eigenständigen Lernen.
     </div>
@@ -98,7 +96,7 @@
         <mat-button-toggle value="6">6</mat-button-toggle>
       </mat-button-toggle-group>
     </div>
-    <mat-divider [inset]="true"></mat-divider>
+    <mat-divider></mat-divider>
     <div class="rating-item">
       Die Ausstattung der Räume und die vorhandene Technik war gut.
     </div>
@@ -114,15 +112,18 @@
     </div>
   </div>
   <mat-form-field class="full-width" >
-      <textarea formControlName="suggestions" matInput #message maxlength="1000" rows="4" placeholder="Anregungen"></textarea>
+      <textarea formControlName="suggestions" cdkTextareaAutosize matInput #message maxlength="1000" placeholder="Anregungen"></textarea>
       <mat-hint align="end">{{message.value.length}} / 1000</mat-hint>
     </mat-form-field>
-</mat-card-content>
-  <mat-card-actions class="button-row" align="end">
-      <button mat-flat-button [disabled]="!rateForm.dirty" (click)="rateForm.reset()">Zurücksetzen</button>
-    <button [disabled]="!rateForm.valid" (click)="save(rateForm.value)" mat-flat-button color="primary">Bewertung absenden</button>
-  </mat-card-actions>
-</mat-card>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Abbrechen</button>
+   
+
+    <button cdkFocusInitial [disabled]="!rateForm.valid" (click)="save(rateForm.value)" mat-flat-button color="primary">Bewertung absenden</button>
+  </mat-dialog-actions>
+
+
 </form>
 </div>
 </div>

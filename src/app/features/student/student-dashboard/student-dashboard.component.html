@@ -1,22 +1,21 @@
-<div class="outer">
-  <div class="middle">
-    <div class="inner">
-      <div *ngIf="studentService.toRate as rating">
-      <div *ngFor="let rate of rating">
-          <mat-spinner color="accent" *ngIf="!(rate.moduleRef | doc | async) || !(rate.teacherRef | doc | async)"></mat-spinner>
-          <mat-card *ngIf="(rate.moduleRef | doc | async) && (rate.teacherRef | doc | async)">
-            <mat-card-title>
-              {{ (rate.moduleRef | doc | async)?.name }} 
-            </mat-card-title>
-            <mat-card-subtitle>
-                Dozent: {{ (rate.teacherRef | doc | async)?.displayName }} 
-            </mat-card-subtitle>
-            <mat-card-actions align="end">
-              <button routerLink="/student/rate" mat-button>Bewertung starten</button>
-            </mat-card-actions>
-          </mat-card>
+<div *ngIf="studentService.toRate as rating">
+  <div *ngFor="let rate of rating">
 
-      </div>
-    </div>
+    <mat-spinner style="margin:0 auto;" color="accent" *ngIf="!(rate.moduleRef | doc | async) || !(rate.teacherRef | doc | async)"></mat-spinner>
+    <mat-card style="max-width: 400px" *ngIf="(rate.moduleRef | doc | async) && (rate.teacherRef | doc | async)">
+      <mat-card-title>
+        {{ (rate.moduleRef | doc | async)?.name }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        Dozent: {{ (rate.teacherRef | doc | async)?.displayName }}
+      </mat-card-subtitle>
+      <mat-card-subtitle>
+          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+        </mat-card-subtitle>
+      <mat-card-actions>
+        <button (click)="openDialog()" mat-button>Bewertung starten</button>
+      </mat-card-actions>
+    </mat-card>
+
   </div>
-</div>

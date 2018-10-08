@@ -23,14 +23,14 @@ export class StudentService implements OnDestroy {
             this.toRate = toRate;
             toRate.forEach(data => {
               this.toRateId = data.id;
-            })
+            });
           });
       }
     });
   }
 
   getToRateObjects(classRef): Observable<Rating[]> {
-    this.db.doc(`to_rate/${this.auth.uid}/`)
+    this.db.doc(`to_rate/${this.auth.uid}/`);
     return this.db.colWithIds$<Rating>('to_rate', ref => ref
       .where('classRef', '==', classRef)
       .where('status', '==', 'open'));
@@ -39,7 +39,9 @@ export class StudentService implements OnDestroy {
   getStudentRef(): DocumentReference {
     return this.db.doc(`users/${this.auth.uid}`).ref;
   }
+  newRating() {
 
+  }
   saveRating(form: SubmittedRating) {
     const ratingsCollection = this.afs.doc<SubmittedRating>(`to_rate/${this.toRateId}/ratings/${this.auth.uid}`);
     const ratingData: SubmittedRating = {

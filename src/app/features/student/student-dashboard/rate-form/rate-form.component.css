@@ -1,0 +1,56 @@
+
+  .button-row button,
+  .button-row a {
+    margin-right: 8px;
+  }
+  
+  .checkbox-row mat-radio-button {
+    margin-right: 8px;
+  }
+  .grid-container {
+    margin: 0px;
+  }
+  
+  .dashboard-card {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+  }
+  
+  .more-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+  }
+  
+  .dashboard-card-content {
+    text-align: center;
+  }
+  .rating-container {
+    max-width: 840px;
+  }
+  .rating-card {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 840px;
+  }
+  .rating {
+    display: inline-block;
+    margin: 16px 0 16px 0 ; 
+    vertical-align: top;
+    width: 276px;
+  }
+  .rating-list {
+    flex-wrap: wrap;
+  }
+  .full-width {
+    width: 100%;
+  }
+  .rating-item {
+    display: inline-block;
+    margin: 16px 0px 16px 0 ; 
+    vertical-align: top;
+    width: 319px;
+  }

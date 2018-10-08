@@ -14,6 +14,7 @@ export class TeacherService {
   classCollection: AngularFirestoreCollection<Class>;
   modulCollection: AngularFirestoreCollection<Modul>;
   userDoc: AngularFirestoreDocument<User>;
+  i = 0;
   constructor(private afs: AngularFirestore, private auth: AuthService, private db: DatabaseService) {
 
     this.modulCollection = this.afs.collection('modules', ref =>
@@ -35,47 +36,38 @@ export class TeacherService {
       }
       ));
   }
-  getModulesTwo(): Observable<Modul[]> {
+
+  getModules(): Observable<Modul[]> {
     return this.db.colWithIds$('modules', ref => ref.orderBy('name'));
   }
-  getModules(): Observable<Modul[]> {
-    return this.modulCollection.snapshotChanges().pipe(
-      map(actions => {
-        return actions.map(a => {
-          const data = a.payload.doc.data() as Modul;
-          const id = a.payload.doc.id;
-          return { id, ...data };
-        });
-      })
-    );
-  }
+
   getClasses(): Observable<Class[]> {
-    return this.classCollection.snapshotChanges().pipe(
-      map(actions => {
-        return actions.map(a => {
-          const data = a.payload.doc.data() as Class;
-          const id = a.payload.doc.id;
-          return { id, ...data };
-        });
-      })
-    );
-  }
-  getOpenRatings(): Observable<Rating[]> {
-    return this.db.colWithIds$('to_rate');
+    return this.db.colWithIds$('classes', ref => ref.orderBy('name'));
   }
 
-  getEligibleStudents(classId): Observable<Class> {
-    const classDoc = this.afs.doc<Class>(`classes/${classId}`);
-    return classDoc.valueChanges();
+  getOpenRatings(): Observable<Rating[]> {
+    return this.db.colWithIds$('to_rate', ref => ref
+      .where('teacherRef', '==', this.getCurrentUser())
+      .where('status', '==', 'open'));
   }
+
 
   getCurrentUser() {
-    this.userDoc = this.afs.doc<User>(`users/${this.auth.uid}`);
-    return this.userDoc.valueChanges();
+    return this.db.doc<User>(`users/${this.auth.uid}`).ref;
   }
-
+  getNumberOfDoneRatings(id) {
+    let i = 0;
+    const ratingsCollection = this.db.col$<Rating>(`to_rate/${id}/ratings`);
+    ratingsCollection.subscribe(data => {
+      this.i = data.length;
+      
+      
+    });
+    console.log('service nr: ' + this.i); 
+    return this.i;
+  }
   startRating(teacherId: string, classId: string, moduleId: string, start: Date, end: Date) {
-    const ratingsCollection = this.afs.collection<Rating>('to_rate');
+    const ratingsCollection = this.db.col<Rating>('to_rate');
     const teacherRef = this.db.doc(`users/${teacherId}`);
     const classRef = this.db.doc(`classes/${classId}`);
     const moduleRef = this.db.doc(`modules/${moduleId}`);
@@ -84,7 +76,9 @@ export class TeacherService {
       classRef: classRef.ref,
       moduleRef: moduleRef.ref,
       start: start,
-      end: end
+      end: end,
+      status: 'open',
+      studentsDone: 0
     };
     return ratingsCollection.add(ratingsData);
   }

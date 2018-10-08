@@ -21,28 +21,28 @@ import { MatStepper } from '@angular/material';
 })
 export class TeacherDashboardComponent implements OnInit, OnDestroy {
   pageTitle = 'Dashboard';
-  openRatings: Rating[];
   user: User;
   subscription: Subscription;
-  eligibleStudents: number;
-
-  completed = false;
+  
   startRatingForm: FormGroup;
   startRatingCompleted = false;
-  endRatingForm: FormGroup;
-  endRatingCompleted = false;
-  ratingCompleted = false;
-  isEditable = false;
   classes: Class[];
   modules: Modul[];
   classId: string;
   moduleId: string;
   startDate: any;
   endDate: any;
+  
+  openRatings: Rating[];
+  endRatingForm: FormGroup;
+  endRatingCompleted = false;
+  ratingCompleted = false;
+  
   processing: boolean;
+  isEditable = false;
   currentIndex = 0;
   isOptional = false;
-  modules$: Modul[];
+  ratingsDone: number;
 
   constructor(
     private auth: AuthService,
@@ -55,6 +55,7 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.processing = true;
     this.title.setTitle(this.title.getTitle() + ' - ' + this.pageTitle);
+    
     this.startRatingForm = this._formBuilder.group({
       moduleId: ['', Validators.required],
       classId: ['', Validators.required],
@@ -62,24 +63,14 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
       endDate: ['', Validators.required],
       startRatingDone: ['', Validators.required]
     });
-
-
-
-
-    this.teacherService.getClasses().subscribe(classes => {
-      this.classes = classes;
-    });
-
-    this.teacherService.getModulesTwo().subscribe(data => this.modules$ = data);
-
-    this.teacherService.getModules().subscribe(modules => {
-      this.modules = modules;
-    });
-
+    
     this.endRatingForm = this._formBuilder.group({
       endRatingDone: ['', Validators.required]
     });
 
+    this.teacherService.getModules().subscribe(data => this.modules = data);
+    
+    this.teacherService.getClasses().subscribe(data => this.classes = data)
 
     this.subscription = this.teacherService.getOpenRatings()
       .subscribe(openRating => {
@@ -89,14 +80,13 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
           this.isOptional = true;
           this.startRatingCompleted = true;
           this.currentIndex = 1;
+  
         } else {
           this.currentIndex = 0;
         }
         this.processing = false;
         this.openRatings = openRating;
       });
-
-
   }
 
   getUser() {
@@ -127,6 +117,7 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
     this.isOptional = false;
     stepper.reset();
   }
+  
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

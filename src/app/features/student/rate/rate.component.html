@@ -1,8 +1,9 @@
-
+<div *ngIf="studentService.toRate as ratings">
+    <div *ngFor="let rate of ratings">
  <form [formGroup]="rateForm">
 <mat-card class="rating-card">
   <mat-card-title>
-    Bewertung des Moduls XYZ
+    Bewertung des Moduls {{(rate.moduleRef | doc | async)?.name}}
   </mat-card-title>
   <mat-card-subtitle>
       Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
@@ -123,3 +124,5 @@
   </mat-card-actions>
 </mat-card>
 </form>
+</div>
+</div>

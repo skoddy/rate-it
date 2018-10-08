@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User, Rating } from '@app/data-model';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { StudentService } from '@app/features/student/student.service';
 import { AuthService } from '@app/core/services/auth/auth.service';
 
@@ -9,26 +9,17 @@ import { AuthService } from '@app/core/services/auth/auth.service';
   templateUrl: './student-dashboard.component.html',
   styleUrls: ['./student-dashboard.component.css']
 })
-export class StudentDashboardComponent implements OnInit, OnDestroy {
+export class StudentDashboardComponent implements OnInit {
   user: User;
-  toRate: Rating[];
   subscription: Subscription;
+  toRate: Rating[];
   constructor(public studentService: StudentService, private auth: AuthService) {
 
   }
 
   ngOnInit() {
-    this.subscription = this.auth.user$.subscribe(user => {
-      if (user) {
-        console.log(user.classId);
-        this.studentService.getToRateObjects('to_rate', ref =>
-          ref.where('classId', '==', user.classId)).subscribe(data => {
-            this.toRate = data;
-          });
-      }
-    });
+this.toRate = this.studentService.toRate;
   }
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+ 
+
 }

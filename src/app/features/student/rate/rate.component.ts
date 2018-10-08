@@ -12,7 +12,7 @@ export class RateComponent implements OnInit {
 
   rateForm: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder, private studentService: StudentService) { }
+  constructor(private _formBuilder: FormBuilder, public studentService: StudentService) { }
 
   ngOnInit() {
     this.rateForm = this._formBuilder.group({
@@ -29,10 +29,10 @@ export class RateComponent implements OnInit {
   save(form: SubmittedRating) {
     console.log(form);
 
-/*     this.studentService.saveRating(form)
+     this.studentService.saveRating(form)
       .then(() => {
         console.log('done');
 
-      }); */
+      });
   }
 }

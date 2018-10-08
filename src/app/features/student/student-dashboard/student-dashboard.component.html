@@ -1,14 +1,15 @@
 <div class="outer">
   <div class="middle">
     <div class="inner">
-      <div *ngFor="let rate of toRate">
-
-          <mat-card>
+      <div *ngIf="studentService.toRate as rating">
+      <div *ngFor="let rate of rating">
+          <mat-spinner color="accent" *ngIf="!(rate.moduleRef | doc | async) || !(rate.teacherRef | doc | async)"></mat-spinner>
+          <mat-card *ngIf="(rate.moduleRef | doc | async) && (rate.teacherRef | doc | async)">
             <mat-card-title>
-              {{ rate.moduleName }} 
+              {{ (rate.moduleRef | doc | async)?.name }} 
             </mat-card-title>
             <mat-card-subtitle>
-                Dozent: {{ rate.teacher }}
+                Dozent: {{ (rate.teacherRef | doc | async)?.displayName }} 
             </mat-card-subtitle>
             <mat-card-actions align="end">
               <button routerLink="/student/rate" mat-button>Bewertung starten</button>

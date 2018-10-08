@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument, DocumentReference } from '@angular/fire/firestore';
 
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -110,11 +110,14 @@ export class AuthService {
   }
 
   private setUserData(user, title, displayName, role, classId?: string) {
-
+    let classRef: DocumentReference = null;
     if (role === 'student') {
       this.increaseStudents(classId);
     }
+    if (classId) {
+      classRef = this.afs.doc(`classes/${classId}`).ref;
 
+    }
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     const data: User = {
       uid: user.uid,
@@ -123,7 +126,7 @@ export class AuthService {
       displayName: displayName,
       photoURL: user.photoURL || 'https://goo.gl/Fz9nrQ',
       createdAt: new Date(),
-      classId: classId ? classId : '',
+      classRef: classId ? classRef : null,
       roles: {
         admin: (role === 'admin') ? true : false,
         office: (role === 'office') ? true : false,

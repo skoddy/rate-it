@@ -32,7 +32,7 @@
             <mat-form-field appearance="fill">
               <mat-label>Modul</mat-label>
               <mat-select placeholder="Modul" formControlName="moduleId">
-                <mat-option *ngFor="let module of modules$" [value]="module.id">
+                <mat-option *ngFor="let module of modules" [value]="module.id">
                   {{module.name}}
                 </mat-option>
               </mat-select>
@@ -77,7 +77,7 @@
 
        <div *ngIf="openRatings as ratings">
           <div *ngFor="let rating of ratings">
-            <mat-card>
+            <mat-card class="mat-elevation-z0">
               <mat-card-title>
                 {{ (rating.moduleRef | doc | async)?.name }}
               </mat-card-title>
@@ -89,7 +89,7 @@
               </mat-card-subtitle>
               <mat-card-content>
                 Bewertung läuft..
-                Abgegeben 0 / {{ (rating.classRef | doc | async)?.students }}
+                Abgegeben {{ rating.studentsDone }} / {{ (rating.classRef | doc | async)?.students }}
               </mat-card-content>
             </mat-card>
           </div>

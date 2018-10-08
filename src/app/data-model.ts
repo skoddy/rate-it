@@ -14,7 +14,7 @@ export interface User {
     displayName: string;
     photoURL: string;
     createdAt: Date;
-    classId?: string;
+    classRef?: DocumentReference;
     roles: Roles;
 }
 
@@ -31,6 +31,7 @@ export interface Modul {
 }
 
 export interface SubmittedRating {
+    studentRef: DocumentReference;
     documents: number;
     exercises: number;
     software: number;
@@ -42,9 +43,12 @@ export interface SubmittedRating {
 }
 
 export interface Rating {
+    id?: string;
     teacherRef: DocumentReference;
     classRef: DocumentReference;
     moduleRef: DocumentReference;
     start: Date;
     end: Date;
+    status: string;
+    studentsDone?: number;
 }

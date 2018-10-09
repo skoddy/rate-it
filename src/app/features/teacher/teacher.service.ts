@@ -78,7 +78,8 @@ export class TeacherService {
       start: start,
       end: end,
       status: 'open',
-      studentsDone: 0
+      studentsDone: 0,
+      students: []
     };
     return ratingsCollection.add(ratingsData);
   }

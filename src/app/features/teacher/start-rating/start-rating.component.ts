@@ -40,8 +40,6 @@ export class StartRatingComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
     this.teacherService.getModules().subscribe(modules => {
       this.modules = modules;
     });

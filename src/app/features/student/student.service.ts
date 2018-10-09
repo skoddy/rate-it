@@ -13,52 +13,49 @@ export class StudentService implements OnDestroy {
   user: User;
   subscription: Subscription;
   toRate: Rating[];
-  toRateId: string;
-
+  studentRef: DocumentReference;
+  ratingExists: boolean;
   constructor(public afs: AngularFirestore, private auth: AuthService, private db: DatabaseService) {
-    this.subscription = this.auth.user$.subscribe(user => {
-      if (user) {
-        this.getToRateObjects(user.classRef)
-          .subscribe(toRate => {
-            this.toRate = toRate;
-            toRate.forEach(data => {
-              this.toRateId = data.id;
-            });
-          });
-      }
-    });
+    this.user = this.auth.userData;
+    this.studentRef = this.getStudentRef();
   }
 
-  getToRateObjects(classRef): Observable<Rating[]> {
+  getToRateObjects(): Observable<Rating[]> {
     this.db.doc(`to_rate/${this.auth.uid}/`);
     return this.db.colWithIds$<Rating>('to_rate', ref => ref
-      .where('classRef', '==', classRef)
+      .where('classRef', '==', this.user.classRef)
       .where('status', '==', 'open'));
   }
 
   getStudentRef(): DocumentReference {
     return this.db.doc(`users/${this.auth.uid}`).ref;
   }
-  newRating() {
 
-  }
-  saveRating(form: SubmittedRating) {
-    const ratingsCollection = this.afs.doc<SubmittedRating>(`to_rate/${this.toRateId}/ratings/${this.auth.uid}`);
+  saveRating(data) {
+    const ratingsCollection = this.afs.doc<SubmittedRating>(`to_rate/${data.id}/ratings/${this.auth.uid}`);
     const ratingData: SubmittedRating = {
-      studentRef: this.getStudentRef(),
-      documents: form.documents,
-      exercises: form.exercises,
-      software: form.software,
-      support: form.support,
-      evaluations: form.evaluations,
-      working_climate: form.working_climate,
-      equipment: form.equipment,
-      suggestions: form.suggestions
+      studentRef: this.studentRef,
+      documents: data.documents,
+      exercises: data.exercises,
+      software: data.software,
+      support: data.support,
+      evaluations: data.evaluations,
+      working_climate: data.working_climate,
+      equipment: data.equipment,
+      suggestions: data.suggestions
     };
 
-    return ratingsCollection.set(ratingData).then(() => this.increaseRatingsDone(this.toRateId));
+    return ratingsCollection.set(ratingData).then(() => {
+      this.setStatusDone(data.id);
+      this.increaseRatingsDone(data.id);
+    });
   }
-  private increaseRatingsDone(id: string) {
+setStatusDone(id) {
+  const ratingsCollection = this.afs.doc(`to_rate/${id}`);
+
+  ratingsCollection.set({students: [this.auth.uid]}, {merge: true});
+}
+  increaseRatingsDone(id: string) {
     const toRateDocRef = this.afs.firestore.doc(`to_rate/${id}`);
 
     return this.afs.firestore.runTransaction(transaction =>

@@ -51,4 +51,5 @@ export interface Rating {
     end: Date;
     status: string;
     studentsDone?: number;
+    students: Array<string>
 }

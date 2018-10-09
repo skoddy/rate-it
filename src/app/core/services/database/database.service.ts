@@ -49,6 +49,7 @@ export class DatabaseService {
     return batch.commit();
 
   }
+
   // db.update('items/ID', data) }) // adds updatedAt field
   // db.set('items/ID', data) })    // adds createdAt field
   // db.add('items', data) })       // adds createdAt field

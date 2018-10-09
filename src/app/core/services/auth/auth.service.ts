@@ -16,6 +16,7 @@ export class AuthService {
 
   user$: Observable<User | null>;
   authState: any = null;
+  userData: User;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -32,7 +33,7 @@ export class AuthService {
       })
     );
     this.afAuth.authState.subscribe(data => this.authState = data);
-
+    this.user$.subscribe(data => this.userData = data);
   }
 
   get authenticated(): boolean {

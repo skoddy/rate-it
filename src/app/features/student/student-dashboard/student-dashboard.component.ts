@@ -14,24 +14,33 @@ import { RateFormComponent } from '@app/features/student/student-dashboard/rate-
 export class StudentDashboardComponent implements OnInit {
   user: User;
   subscription: Subscription;
-  toRate: Rating[];
+  toRate: Observable<Rating[]>;
+  ratingExists: boolean;
   constructor(public studentService: StudentService, public dialog: MatDialog, ) {
 
   }
 
   ngOnInit() {
-    this.toRate = this.studentService.toRate;
+    this.toRate = this.studentService.getToRateObjects();
   }
-  openDialog(): void {
+
+  openDialog(id: string, moduleName): void {
+    console.log(id);
+    console.log(moduleName);
+    
+    
     const dialogRef = this.dialog.open(RateFormComponent, {
-      maxWidth: '840px'
+      maxWidth: '840px',
+      data: {
+        id: id,
+        moduleName: moduleName
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       if (result) {
-        this.studentService.newRating(
-        );
+        
+        this.studentService.saveRating(result).then(()=>console.log('Bewertung gespeichert'));
       }
     });
   }

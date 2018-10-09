@@ -34,6 +34,8 @@ export class AuthService {
     );
     this.afAuth.authState.subscribe(data => this.authState = data);
     this.user$.subscribe(data => this.userData = data);
+
+
   }
 
   get authenticated(): boolean {

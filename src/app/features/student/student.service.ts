@@ -4,24 +4,25 @@ import { Observable, Subscription } from 'rxjs';
 import { Rating, SubmittedRating, User } from '@app/data-model';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { DatabaseService } from '@app/core/services/database/database.service';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentService implements OnDestroy {
+
   user: User;
   subscription: Subscription;
   toRate: Rating[];
   studentRef: DocumentReference;
   ratingExists: boolean;
+
   constructor(public afs: AngularFirestore, private auth: AuthService, private db: DatabaseService) {
     this.user = this.auth.userData;
     this.studentRef = this.getStudentRef();
   }
 
-  getToRateObjects(): Observable<Rating[]> {
-    this.db.doc(`to_rate/${this.auth.uid}/`);
+  getOpenRating(): Observable<Rating[]> {
     return this.db.colWithIds$<Rating>('to_rate', ref => ref
       .where('classRef', '==', this.user.classRef)
       .where('status', '==', 'open'));
@@ -50,11 +51,12 @@ export class StudentService implements OnDestroy {
       this.increaseRatingsDone(data.id);
     });
   }
-setStatusDone(id) {
-  const ratingsCollection = this.afs.doc(`to_rate/${id}`);
 
-  ratingsCollection.set({students: [this.auth.uid]}, {merge: true});
-}
+  setStatusDone(id) {
+    const ratingsCollection = this.afs.doc(`to_rate/${id}`);
+    ratingsCollection.set({ students: [this.auth.uid] }, { merge: true });
+  }
+
   increaseRatingsDone(id: string) {
     const toRateDocRef = this.afs.firestore.doc(`to_rate/${id}`);
 

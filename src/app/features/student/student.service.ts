@@ -25,7 +25,7 @@ export class StudentService implements OnDestroy {
     return this.db.colWithIds$<Rating>('to_rate', ref => ref
       .where('classRef', '==', this.user.classRef)
       .where('status', '==', 'open')).pipe(
-        map(data => data.filter(task => task.students.indexOf(this.auth.uid) == -1))
+        map(data => data.filter(task => task.students.indexOf(this.auth.uid) === -1))
       );
   }
 

@@ -56,14 +56,12 @@ export class TeacherService {
     return this.db.doc<User>(`users/${this.auth.uid}`).ref;
   }
   getNumberOfDoneRatings(id) {
-    let i = 0;
+
     const ratingsCollection = this.db.col$<Rating>(`to_rate/${id}/ratings`);
     ratingsCollection.subscribe(data => {
       this.i = data.length;
-      
-      
     });
-    console.log('service nr: ' + this.i); 
+    console.log('service nr: ' + this.i);
     return this.i;
   }
   startRating(teacherId: string, classId: string, moduleId: string, start: Date, end: Date) {

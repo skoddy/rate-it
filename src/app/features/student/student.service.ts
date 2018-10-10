@@ -4,7 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Rating, SubmittedRating, User } from '@app/data-model';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { DatabaseService } from '@app/core/services/database/database.service';
-import { map, take } from 'rxjs/operators';
+import { map, take, startWith, scan, tap, filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,6 @@ export class StudentService implements OnDestroy {
 
   user: User;
   subscription: Subscription;
-  toRate: Rating[];
   studentRef: DocumentReference;
   ratingExists: boolean;
 
@@ -25,7 +24,9 @@ export class StudentService implements OnDestroy {
   getOpenRating(): Observable<Rating[]> {
     return this.db.colWithIds$<Rating>('to_rate', ref => ref
       .where('classRef', '==', this.user.classRef)
-      .where('status', '==', 'open'));
+      .where('status', '==', 'open')).pipe(
+        map(data => data.filter(task => task.students.indexOf(this.auth.uid) == -1))
+      );
   }
 
   getStudentRef(): DocumentReference {

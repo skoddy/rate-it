@@ -1,22 +1,25 @@
-<div *ngIf="toRate as rating">
-  <div *ngFor="let rate of rating | async">
 
-    <mat-spinner style="margin:0 auto;" color="accent" *ngIf="!(rate.moduleRef | doc | async) || !(rate.teacherRef | doc | async)"></mat-spinner>
-    <mat-card style="max-width: 400px" *ngIf="(rate.moduleRef | doc | async) && (rate.teacherRef | doc | async)">
-      <mat-card-title>
-        {{ (rate.moduleRef | doc | async)?.name }}
-      </mat-card-title>
-      <mat-card-subtitle>
-        Dozent: {{ (rate.teacherRef | doc | async)?.displayName }}
-      </mat-card-subtitle>
-      <mat-card-subtitle>
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+    <div *ngIf="(toRate | async) as ratings; else lol">
+  <div *ngFor="let rate of ratings">
+      <mat-spinner style="margin:0 auto;" color="accent" *ngIf="!(rate.moduleRef | doc | async) || !(rate.teacherRef | doc | async)"></mat-spinner>
+      <mat-card style="max-width: 400px" *ngIf="(rate.moduleRef | doc | async) && (rate.teacherRef | doc | async)">
+        <mat-card-title>
+          {{ (rate.moduleRef | doc | async)?.name }}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Dozent: {{ (rate.teacherRef | doc | async)?.displayName }}
         </mat-card-subtitle>
-      <mat-card-actions>
-        <input #item type="text" style="display:none" value="{{(rate.moduleRef | doc | async)?.name}}">
-        <button (click)="openDialog(rate.id, item.value)" mat-button>Bewertung starten</button>
-      </mat-card-actions>
-    </mat-card>
-
+        <mat-card-subtitle>
+          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+          dolore magna aliquyam erat, sed diam voluptua.
+          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+          dolore magna aliquyam erat, sed diam voluptua.
+        </mat-card-subtitle>
+        <mat-card-actions>
+          <input #item type="text" style="display:none" value="{{(rate.moduleRef | doc | async)?.name}}">
+          <button (click)="openDialog(rate.id, item.value)" mat-button>Bewertung starten</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
   </div>
+  <ng-template #lol>asdf</ng-template>

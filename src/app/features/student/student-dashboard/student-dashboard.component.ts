@@ -14,8 +14,8 @@ export class StudentDashboardComponent implements OnInit {
 
   user: User;
   subscription: Subscription;
-  toRate: Observable<Rating[]>;
   ratingExists: boolean;
+  toRate: Observable<Rating[]>;
 
   constructor(
     public studentService: StudentService,

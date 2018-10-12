@@ -1,14 +1,4 @@
-<div class="content-header">
-<h1 class="mat-h1 content-title">Module</h1>
-</div>
-<div class="content-container">
-
-
-<mat-form-field class="search-field">
-  <input name="user-search" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-</mat-form-field>
-</div>
-<div class="content-container mat-elevation-z8">
+<div class="content-container mat-elevation-z1">
 
   <table mat-table [dataSource]="modulDataSource" matSort matSortActive="name" matSortDirection="asc">
 
@@ -23,9 +13,16 @@
     <tr mat-row class="row" *matRowDef="let row; columns: displayedColumns;">
     </tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
 
 
+</div>
+<div class="content-container">
+
+
+  <mat-form-field class="search-field">
+    <input name="user-search" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
 </div>
 <button class="add-button" mat-fab (click)="openDialog()" color="accent">
   <mat-icon>add</mat-icon>

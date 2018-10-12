@@ -8,7 +8,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-manage-modules',
   templateUrl: './manage-modules.component.html',
-  styleUrls: ['./manage-modules.component.css']
+  styleUrls: ['../admin.component.css']
 })
 export class ManageModulesComponent implements OnInit {
 

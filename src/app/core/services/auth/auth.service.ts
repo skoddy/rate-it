@@ -10,7 +10,9 @@ import { switchMap } from 'rxjs/operators';
 import { User } from '@app/data-model';
 import { environment } from '@env/environment';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 
 export class AuthService {
 

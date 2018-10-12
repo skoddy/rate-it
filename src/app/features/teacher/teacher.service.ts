@@ -3,12 +3,13 @@ import { AngularFirestoreCollection, AngularFirestoreDocument, AngularFirestore 
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { Class, Modul, User, Rating } from '@app/data-model';
 import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { DatabaseService } from '@app/core/services/database/database.service';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class TeacherService {
 
   classCollection: AngularFirestoreCollection<Class>;
@@ -64,12 +65,20 @@ export class TeacherService {
     console.log('service nr: ' + this.i);
     return this.i;
   }
+
+  endRating(id: string) {
+    const ratingsCollection = this.db.doc<Rating>(`to_rate/${id}`);
+    return ratingsCollection.update({status: 'ended', endedAt: new Date});
+  }
+
   startRating(teacherId: string, classId: string, moduleId: string, start: Date, end: Date) {
-    const ratingsCollection = this.db.col<Rating>('to_rate');
+    const newKey = this.db.getNewKey('to_rate');
+    const ratingsCollection = this.db.doc<Rating>(`to_rate/${newKey}`);
     const teacherRef = this.db.doc(`users/${teacherId}`);
     const classRef = this.db.doc(`classes/${classId}`);
     const moduleRef = this.db.doc(`modules/${moduleId}`);
     const ratingsData: Rating = {
+      id: newKey,
       teacherRef: teacherRef.ref,
       classRef: classRef.ref,
       moduleRef: moduleRef.ref,
@@ -77,8 +86,9 @@ export class TeacherService {
       end: end,
       status: 'open',
       studentsDone: 0,
-      students: []
+      students: [],
+      createdAt: new Date
     };
-    return ratingsCollection.add(ratingsData);
+    return ratingsCollection.set(ratingsData);
   }
 }

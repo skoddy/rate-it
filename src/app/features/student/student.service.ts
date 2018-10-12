@@ -9,6 +9,7 @@ import { map, take, startWith, scan, tap, filter } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
+
 export class StudentService implements OnDestroy {
 
   user: User;

@@ -27,9 +27,7 @@ import { DatabaseService } from '@app/core/services/database/database.service';
     AdminGuard,
     OfficeGuard,
     TeacherGuard,
-    StudentGuard,
-    AuthService,
-    DatabaseService
+    StudentGuard
   ]
 })
 export class CoreModule { }

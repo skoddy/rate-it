@@ -1,6 +1,6 @@
 <mat-spinner color="accent" *ngIf="processing"></mat-spinner>
 <div *ngIf="!processing" class="stepper">
-  <mat-vertical-stepper linear #stepper [selectedIndex]="currentIndex">
+  <mat-horizontal-stepper linear #stepper [selectedIndex]="currentIndex">
     <mat-step [stepControl]="startRatingForm" [editable]="isEditable" [completed]="startRatingCompleted" [optional]="isOptional">
       <form [formGroup]="startRatingForm">
 
@@ -92,11 +92,11 @@
                 Abgegeben {{ rating.studentsDone }} / {{ (rating.classRef | doc | async)?.students }}
               </mat-card-content>
             </mat-card>
+            <div>
+              <button mat-button (click)="endRating(rating.id, stepper )">complete</button>
+              <button mat-button matStepperNext>Bewertung beenden</button>
+            </div>
           </div>
-        </div>
-        <div>
-          <button mat-button (click)="setCompleted()">complete</button>
-          <button mat-button matStepperNext>Bewertung beenden</button>
         </div>
       </form>
     </mat-step>
@@ -109,5 +109,5 @@
         <button mat-button (click)="done(stepper)">Fertig</button>
       </div>
     </mat-step>
-  </mat-vertical-stepper>
+  </mat-horizontal-stepper>
 </div>

@@ -12,7 +12,9 @@ import { map, take, tap } from 'rxjs/operators';
 type CollectionPredicate<T> = string | AngularFirestoreCollection<T>;
 type DocPredicate<T> = string | AngularFirestoreDocument<T>;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DatabaseService {
   constructor(private afs: AngularFirestore) { }
   get timestamp() {

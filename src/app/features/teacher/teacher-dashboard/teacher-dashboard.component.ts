@@ -98,8 +98,18 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
     return this.auth.user$.subscribe(user => (this.user = user));
   }
 
+  endRating(id: string, stepper: MatStepper): void {
+    this.teacherService.endRating(id)
+      .then(() => {
+        this.endRatingCompleted = true;
+        this.endRatingForm.controls['endRatingDone'].setValue('done');
+        stepper.next();
+        console.log('Bewertung beendet.');
+      });
+  }
+
   startRating(stepper: MatStepper, form) {
-    this.teacherService.startRating(
+    return this.teacherService.startRating(
       this.user.uid,
       form.value.classId,
       form.value.moduleId,
@@ -110,12 +120,9 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
       stepper.next();
     });
   }
-  endRating() {
 
-  }
   setCompleted() {
-    this.endRatingCompleted = true;
-    this.endRatingForm.controls['endRatingDone'].setValue('done');
+
   }
 
   done(stepper: MatStepper) {

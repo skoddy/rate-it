@@ -30,7 +30,6 @@ import { NewClassComponent } from '@app/features/admin/manage-classes/new-class/
     ManageRatingsComponent,
     NewModulComponent
   ],
-  providers: [],
   entryComponents: [NewUserComponent, NewClassComponent, NewModulComponent]
 })
 export class AdminModule { }

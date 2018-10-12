@@ -13,19 +13,28 @@
 
 .sidenav {
   width: 256px;
-  
+
 }
-
-
+.mat-nav-list.main-nav a {
+  border-radius: 6px;
+  margin-bottom: 8px;
+  height: 48px;
+}
+.mat-nav-list.main-nav mat-icon {
+padding-right: 32px;
+}
+.sidenav-menu-icon {
+  color: #5f6368;
+}
+.sidenav-content {
+  padding: 8px;
+}
 
 .mat-toolbar.mat-primary {
   position: sticky;
   top: 0;
 }
 
-.mat-nav-list a.active {
-  background: rgba(0, 0, 0, 0.04)
-}
 
 .content-container {
   margin: 0 1px 0 1px;
@@ -70,6 +79,7 @@ tr.row:not(.example-expanded-row):hover {
 tr.row:not(.example-expanded-row):active {
   background: #efefef;
 }
+
 .dashboard-card {
   position: absolute;
   top: 15px;
@@ -104,6 +114,7 @@ tr.row:not(.example-expanded-row):active {
 .sidesheet-content {
   padding: 20px 16px 0px 16px;
 }
+
 .sidesheet-toolbar {
   height: 64px;
   display: flex;
@@ -114,9 +125,11 @@ tr.row:not(.example-expanded-row):active {
   align-items: center;
   white-space: nowrap;
 }
+
 .sidesheet-toolbar-icon {
-color: #5f6368;
+  color: #5f6368;
 }
+
 .sidesheet-title {
   font: 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
 }

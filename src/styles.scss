@@ -6,7 +6,7 @@ body { margin: 0; font-family: 'Roboto', sans-serif; }
 
 @include mat-core();
 
-$app-primary: mat-palette($mat-blue-grey);
+$app-primary: mat-palette($mat-light-blue);
 $app-accent:  mat-palette($mat-amber, A200, A100, A400);
 
 $app-theme: mat-light-theme($app-primary, $app-accent);
@@ -21,12 +21,22 @@ $app-theme: mat-light-theme($app-primary, $app-accent);
     background-color: mat-color($primary);
     color: mat-color($primary, default-contrast);
   }
+  .mat-nav-list .active-link .mat-icon{
+    color: mat-color($primary);
+  }
+  .mat-nav-list .active-link {
+    color: mat-color($primary);
+  }
+  .mat-nav-list a.active-link {
+    background-color: mat-color($primary, A700, 0.12);
+  }
+
+
 }
 
 // Include the mixin
 @include angular-material-theme($app-theme);
 @include mix-app-theme($app-theme);
-
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.

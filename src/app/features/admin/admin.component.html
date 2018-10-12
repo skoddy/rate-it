@@ -6,28 +6,30 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="!(isHandset$ | async)">
-      <mat-nav-list>
-          <a mat-list-item routerLink="dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" >
-              <mat-icon mat-list-icon>dashboard</mat-icon>
+      <div class="sidenav-content">
+      <mat-nav-list class="main-nav mat-body-2">
+          <a mat-list-item routerLink="dashboard" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" >
+              <mat-icon class="sidenav-menu-icon" mat-list-icon>dashboard</mat-icon>
             Dashboard
           </a>
-        <a mat-list-item routerLink="ratings" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <mat-icon mat-list-icon>star_rate</mat-icon>
+        <a mat-list-item routerLink="ratings" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+          <mat-icon class="sidenav-menu-icon" mat-list-icon>star_rate</mat-icon>
           Bewertungen
         </a>
-        <a mat-list-item routerLink="users" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <mat-icon mat-list-icon>group</mat-icon>
+        <a mat-list-item routerLink="users" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+          <mat-icon class="sidenav-menu-icon" mat-list-icon>group</mat-icon>
           Benutzer
         </a>
-        <a mat-list-item routerLink="classes" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <mat-icon mat-list-icon>school</mat-icon>
+        <a mat-list-item routerLink="classes" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+          <mat-icon routerLinkActive="active" class="sidenav-menu-icon" mat-list-icon>school</mat-icon>
           Klassen
         </a>
-        <a mat-list-item routerLink="modules" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-            <mat-icon mat-list-icon>view_module</mat-icon>
+        <a mat-list-item routerLink="modules" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+            <mat-icon class="sidenav-menu-icon" mat-list-icon>view_module</mat-icon>
           Module
         </a>
       </mat-nav-list>
+    </div>
     </mat-sidenav>
  
     <mat-sidenav-content class="mat-typography">

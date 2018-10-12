@@ -8,11 +8,15 @@
 
 .sidenav-container {
   height: 100%;
+
 }
 
 .sidenav {
-  width: 200px;
+  width: 256px;
+  
 }
+
+
 
 .mat-toolbar.mat-primary {
   position: sticky;
@@ -82,4 +86,37 @@ tr.row:not(.example-expanded-row):active {
 
 .dashboard-card-content {
   text-align: center;
+}
+
+.sidesheet-container {
+  position: absolute;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.sidesheet {
+  width: 320px;
+  border-left: 1px solid rgba(0, 0, 0, .14);
+}
+
+.sidesheet-content {
+  padding: 20px 16px 0px 16px;
+}
+.sidesheet-toolbar {
+  height: 64px;
+  display: flex;
+  box-sizing: border-box;
+  padding: 0 16px;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
+}
+.sidesheet-toolbar-icon {
+color: #5f6368;
+}
+.sidesheet-title {
+  font: 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
 }

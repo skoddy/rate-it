@@ -1,29 +1,42 @@
-<div class="content-container mat-elevation-z1">
+<mat-sidenav-container class="sidesheet-container mat-typography">
+  <mat-sidenav #sidesheet position="end" class="sidesheet" fixedInViewport="true" fixedTopGap="60" attr.role="dialog"
+    mode="side" [opened]="mission">    
+    <div class="sidesheet-toolbar">
+      <span class="sidesheet-title">Filter</span>
+      <span class="toolbar-spacer"></span>
+      <button mat-icon-button (click)="closeSidesheet()">
+        <mat-icon class="sidesheet-toolbar-icon">close</mat-icon>
+      </button>
+    </div>
+    <div class="sidesheet-content">
 
-  <table mat-table [dataSource]="modulDataSource" matSort matSortActive="name" matSortDirection="asc">
+ 
+    <mat-form-field class="search-field">
+      <input name="user-search" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+ </div>
+  </mat-sidenav>
+  <div class="content-container mat-elevation-z0">
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-      <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-    </ng-container>
+    <table mat-table [dataSource]="modulDataSource" matSort matSortActive="name" matSortDirection="asc">
 
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row class="row" *matRowDef="let row; columns: displayedColumns;">
-    </tr>
-  </table>
-  <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
-
-
-</div>
-<div class="content-container">
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+      </ng-container>
 
 
-  <mat-form-field class="search-field">
-    <input name="user-search" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-  </mat-form-field>
-</div>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row class="row" *matRowDef="let row; columns: displayedColumns;">
+      </tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+
+
+  </div>
+
+</mat-sidenav-container>
 <button class="add-button" mat-fab (click)="openDialog()" color="accent">
   <mat-icon>add</mat-icon>
 </button>

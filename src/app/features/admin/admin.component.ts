@@ -6,11 +6,13 @@ import { Router, NavigationStart } from '@angular/router';
 import { MatSidenav } from '@angular/material';
 import { SidesheetService } from '@app/features/admin/sidesheet.service';
 import { BreakpointService } from '@app/features/admin/breakpoint.service';
+import { routerTransition } from '@app/core/animations/router.transitions';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+  styleUrls: ['./admin.component.css'],
+  animations: [routerTransition]
 })
 export class AdminComponent implements OnInit {
 

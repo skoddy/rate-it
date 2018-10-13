@@ -10,7 +10,7 @@
     </div>
     <div class="sidesheet-content">
       <mat-form-field appearance="fill">
-        <mat-label>Klasse</mat-label>
+        <mat-label>Modul</mat-label>
         <mat-select placeholder="Modul" [(ngModel)]="moduleId" (selectionChange)="filterRatingsService.filterByModule($event.value)">
           <mat-option>Kein Filter</mat-option>
           <mat-option *ngFor="let module of modulesList" [value]="module.id">
@@ -18,7 +18,15 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
+      <mat-form-field appearance="fill">
+        <mat-label>Klasse</mat-label>
+        <mat-select placeholder="Modul" [(ngModel)]="classId" (selectionChange)="filterRatingsService.filterByClass($event.value)">
+          <mat-option>Kein Filter</mat-option>
+          <mat-option *ngFor="let class of classList" [value]="class.id">
+            {{class.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </mat-sidenav>
   <div *ngIf="ratingOverviewList; let ratings; else loading">
@@ -38,7 +46,7 @@
             </mat-card-title>
           </mat-card-header>
           <mat-card-content class="dashboard-card-content">
-            <div> {{list.endedAt.toDate() | date:'medium':'': 'de'}}</div>
+            <div> {{list.endedAt.toDate() | date:'medium':'': 'de'}} {{(list.classRef | doc | async)?.name}}</div>
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>

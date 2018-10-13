@@ -11,21 +11,22 @@ import { Query } from '@firebase/firestore-types';
 export class FilterRatingsService {
   items$: Observable<any[]>;
   moduleRefFilter$: BehaviorSubject<DocumentReference | null>;
-  colorFilter$: BehaviorSubject<string | null>;
+  classRefFilter$: BehaviorSubject<DocumentReference | null>;
 
   constructor(private afs: AngularFirestore, private db: DatabaseService) {
 
     this.moduleRefFilter$ = new BehaviorSubject(null);
-    this.colorFilter$ = new BehaviorSubject(null);
+    this.classRefFilter$ = new BehaviorSubject(null);
     this.items$ = combineLatest(
       this.moduleRefFilter$,
-      this.colorFilter$
+      this.classRefFilter$
     ).pipe(
-      switchMap(([moduleRef, color]) =>
+      switchMap(([moduleRef, classRef]) =>
         afs.collection('to_rate', ref => {
           let query: Query = ref;
+          query = query.orderBy('endedAt', 'desc');
           if (moduleRef) { query = query.where('moduleRef', '==', moduleRef); }
-          if (color) { query = query.where('color', '==', color); }
+          if (classRef) { query = query.where('classRef', '==', classRef); }
           return query;
         }).valueChanges()
       )
@@ -36,8 +37,9 @@ export class FilterRatingsService {
     const moduleRef = id ? this.db.doc(`modules/${id}`).ref : null;
     this.moduleRefFilter$.next(moduleRef);
   }
-  filterByColor(color: string | null) {
-    this.colorFilter$.next(color);
+  filterByClass(id: string | null) {
+    const classRef = id ? this.db.doc(`classes/${id}`).ref : null;
+    this.classRefFilter$.next(classRef);
   }
 
 }

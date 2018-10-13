@@ -47,15 +47,7 @@ export class AdminService {
   }
 
   getClasses(): Observable<Class[]> {
-    return this.classCollection.snapshotChanges().pipe(
-      map(actions => {
-        return actions.map(a => {
-          const data = a.payload.doc.data() as Class;
-          const id = a.payload.doc.id;
-          return { id, ...data };
-        });
-      })
-    );
+    return this.db.colWithIds$('classes', ref => ref.orderBy('name'));
   }
 
   getUser(id: string) {

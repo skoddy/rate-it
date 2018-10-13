@@ -1,6 +1,6 @@
 <mat-sidenav-container class="sidesheet-container mat-typography">
   <mat-sidenav #sidesheet position="end" class="sidesheet" fixedInViewport="true" fixedTopGap="60" attr.role="dialog"
-    mode="side" [opened]="mission">    
+  [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="state">    
     <div class="sidesheet-toolbar">
       <span class="sidesheet-title">Filter</span>
       <span class="toolbar-spacer"></span>

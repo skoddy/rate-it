@@ -1,32 +1,48 @@
 /* You can add global styles to this file, and also import other style files */
-html, body { height: 100%; }
-body { margin: 0; font-family: 'Roboto', sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
 
 @import '~@angular/material/theming';
 
 @include mat-core();
 
 $app-primary: mat-palette($mat-light-blue);
-$app-accent:  mat-palette($mat-amber, A200, A100, A400);
+$app-accent: mat-palette($mat-amber, A200, A100, A400);
 
 $app-theme: mat-light-theme($app-primary, $app-accent);
+
+
 
 @mixin mix-app-theme($app-theme) {
   $primary: map-get($app-theme, primary);
   $accent: map-get($app-theme, accent);
-.login-background {
-  background-color: mat-color($primary);
-}
+
+  .login-background {
+    background-color: mat-color($primary);
+  }
+  .header {
+    background-color: mat-color($primary);
+  }
   .mat-button-toggle-checked {
     background-color: mat-color($primary);
     color: mat-color($primary, default-contrast);
   }
-  .mat-nav-list .active-link .mat-icon{
+
+  .mat-nav-list .active-link .mat-icon {
     color: mat-color($primary);
   }
+
   .mat-nav-list .active-link {
     color: mat-color($primary);
   }
+
   .mat-nav-list a.active-link {
     background-color: mat-color($primary, A700, 0.12);
   }
@@ -40,6 +56,3 @@ $app-theme: mat-light-theme($app-primary, $app-accent);
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-
-
-

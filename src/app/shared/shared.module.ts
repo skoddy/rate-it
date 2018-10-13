@@ -5,6 +5,7 @@ import { MaterialModule } from '@app/shared/material/material.module';
 import { RouterModule } from '@angular/router';
 import { SelectClassComponent } from '@app/shared/select-class/select-class.component';
 import { DocPipe } from './pipes/doc.pipe';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   imports: [
@@ -20,8 +21,9 @@ import { DocPipe } from './pipes/doc.pipe';
     MaterialModule,
     ReactiveFormsModule,
     SelectClassComponent,
+    HeaderComponent,
     DocPipe
   ],
-  declarations: [SelectClassComponent, DocPipe]
+  declarations: [SelectClassComponent, DocPipe, HeaderComponent]
 })
 export class SharedModule { }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from '@app/features/admin/admin.service';
+import { BreakpointService } from '@app/features/admin/breakpoint.service';
 
 @Component({
   selector: 'app-manage-ratings',
@@ -6,8 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['../admin.component.css']
 })
 export class ManageRatingsComponent implements OnInit {
-
-  constructor() { }
+  ratingOverviewList: any;
+  isHandset$ = this.breakpointService.isHandset$;
+  constructor(private adminService: AdminService, private breakpointService: BreakpointService) {
+    adminService.getRatingOverviewList().subscribe(data => this.ratingOverviewList = data);
+  }
 
   ngOnInit() {
   }

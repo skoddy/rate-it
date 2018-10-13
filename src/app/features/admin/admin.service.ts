@@ -4,6 +4,7 @@ import { User, Class, Modul } from '@app/data-model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from '@app/core/services/auth/auth.service';
+import { DatabaseService } from '@app/core/services/database/database.service';
 
 // Register  the provider in the module. New in Angular 6.
 
@@ -18,12 +19,17 @@ export class AdminService {
   classCollection: AngularFirestoreCollection<Class>;
   modulCollection: AngularFirestoreCollection<Modul>;
 
-  constructor(private afs: AngularFirestore, private auth: AuthService) {
+  constructor(
+    private afs: AngularFirestore,
+    private auth: AuthService,
+    private db: DatabaseService) {
     this.userCollection = this.afs.collection('users');
     this.classCollection = this.afs.collection('classes');
     this.modulCollection = this.afs.collection('modules');
   }
-
+getRatingOverviewList(): Observable<any> {
+  return this.db.colWithIds$('to_rate', ref => ref.where('status', '==', 'ended'));
+}
   getUsers(): Observable<User[]> {
     return this.userCollection.snapshotChanges().pipe(
       map(actions => {

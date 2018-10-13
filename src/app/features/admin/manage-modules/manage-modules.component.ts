@@ -6,6 +6,7 @@ import { NewModulComponent } from '@app/features/admin/manage-modules/new-modul/
 import { Title } from '@angular/platform-browser';
 import { SidesheetService } from '@app/features/admin/sidesheet.service';
 import { Subscription } from 'rxjs';
+import { BreakpointService } from '@app/features/admin/breakpoint.service';
 
 @Component({
   selector: 'app-manage-modules',
@@ -18,27 +19,26 @@ export class ManageModulesComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('sidesheet') public sideSheet: MatSidenav;
   displayedColumns: string[] = ['name'];
   modulDataSource: MatTableDataSource<Modul>;
   subscription: Subscription;
-  mission: boolean;
-
+  state: boolean;
+  isHandset$ = this.breakpointService.isHandset$;
   constructor(
     private adminService: AdminService,
     public dialog: MatDialog,
     private title: Title,
-    private sidesheetService: SidesheetService
+    private sidesheetService: SidesheetService,
+    private breakpointService: BreakpointService
   ) {
-    this.subscription = sidesheetService.missionAnnounced$.subscribe(
-      mission => {
-        this.mission = mission;
+    this.subscription = sidesheetService.state$.subscribe(
+      state => {
+        this.state = state;
       });
   }
 
   ngOnInit() {
     this.title.setTitle(this.pageTitle);
-    this.sidesheetService.setSideNav(this.sideSheet);
     this.adminService.getModules().subscribe((user: Modul[]) => {
 
       // Assign the data to the data source for the table to render
@@ -50,6 +50,7 @@ export class ManageModulesComponent implements OnInit, OnDestroy {
       console.log(err);
     }));
   }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(NewModulComponent, {
       maxWidth: '500px',
@@ -76,8 +77,9 @@ export class ManageModulesComponent implements OnInit, OnDestroy {
   }
 
   closeSidesheet() {
-    this.sidesheetService.announceMission(false);
+    this.sidesheetService.opened(false);
   }
+
   ngOnDestroy() {
     // prevent memory leak when component destroyed
     this.subscription.unsubscribe();

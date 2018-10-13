@@ -1,13 +1,11 @@
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { Observable } from 'rxjs';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { map } from 'rxjs/operators';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { Title } from '@angular/platform-browser';
 import { SidenavService } from '@app/features/admin/sidenav.service';
 import { Router, NavigationStart } from '@angular/router';
 import { MatSidenav } from '@angular/material';
 import { SidesheetService } from '@app/features/admin/sidesheet.service';
+import { BreakpointService } from '@app/features/admin/breakpoint.service';
 
 @Component({
   selector: 'app-admin',
@@ -19,18 +17,16 @@ export class AdminComponent implements OnInit {
   pageTitle = 'Admin';
   @ViewChild('drawer') public sideNav: MatSidenav;
 
-  isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
-    .pipe(map(result => result.matches));
+  isHandset$ = this.breakpointService.isHandset$;
   handset: boolean;
 
   constructor(
-    private breakpointObserver: BreakpointObserver,
     private auth: AuthService,
     private title: Title,
     private sideNavService: SidenavService,
     private sidesheetService: SidesheetService,
-    private router: Router
+    private router: Router,
+    private breakpointService: BreakpointService
   ) {
 
 
@@ -39,7 +35,9 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     this.title.setTitle(this.pageTitle);
     this.sideNavService.setSideNav(this.sideNav);
-    this.isHandset$.subscribe(data => { this.handset = data; });
+    this.isHandset$.subscribe(data => {
+      this.handset = data;
+    });
 
     this.router.events
       .subscribe(event => {
@@ -53,7 +51,7 @@ export class AdminComponent implements OnInit {
     this.auth.signOut();
   }
   openSidesheet() {
-    this.sidesheetService.announceMission(true);
+    this.sidesheetService.opened(true);
   }
 
 }

@@ -14,7 +14,7 @@ import { Title } from '@angular/platform-browser';
 export class ManageClassesComponent implements OnInit {
 
   pageTitle = 'Klassen';
-
+  isLoadingResults = true;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -28,12 +28,13 @@ export class ManageClassesComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle(this.pageTitle);
-    this.adminService.getClasses().subscribe((user: Class[]) => {
+    this.adminService.getClasses().subscribe((classes: Class[]) => {
 
       // Assign the data to the data source for the table to render
-      this.classDataSource = new MatTableDataSource(user);
+      this.classDataSource = new MatTableDataSource(classes);
       this.classDataSource.paginator = this.paginator;
       this.classDataSource.sort = this.sort;
+      this.isLoadingResults = false;
 
     }, (err => {
       console.log(err);

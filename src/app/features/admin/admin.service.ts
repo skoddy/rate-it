@@ -27,9 +27,9 @@ export class AdminService {
     this.classCollection = this.afs.collection('classes');
     this.modulCollection = this.afs.collection('modules');
   }
-getRatingOverviewList(): Observable<any> {
-  return this.db.colWithIds$('to_rate', ref => ref.where('status', '==', 'ended'));
-}
+  getRatingOverviewList(): Observable<any> {
+    return this.db.colWithIds$('to_rate', ref => ref.where('status', '==', 'ended'));
+  }
   getUsers(): Observable<User[]> {
     return this.userCollection.snapshotChanges().pipe(
       map(actions => {
@@ -43,15 +43,7 @@ getRatingOverviewList(): Observable<any> {
   }
 
   getModules(): Observable<Modul[]> {
-    return this.modulCollection.snapshotChanges().pipe(
-      map(actions => {
-        return actions.map(a => {
-          const data = a.payload.doc.data() as Modul;
-          const id = a.payload.doc.id;
-          return { id, ...data };
-        });
-      })
-    );
+    return this.db.colWithIds$('modules', ref => ref.orderBy('name'));
   }
 
   getClasses(): Observable<Class[]> {

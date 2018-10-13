@@ -39,10 +39,10 @@ export class ManageModulesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.title.setTitle(this.pageTitle);
-    this.adminService.getModules().subscribe((user: Modul[]) => {
+    this.adminService.getModules().subscribe((modules: Modul[]) => {
 
       // Assign the data to the data source for the table to render
-      this.modulDataSource = new MatTableDataSource(user);
+      this.modulDataSource = new MatTableDataSource(modules);
       this.modulDataSource.paginator = this.paginator;
       this.modulDataSource.sort = this.sort;
 

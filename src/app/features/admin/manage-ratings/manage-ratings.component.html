@@ -1,23 +1,52 @@
-<div *ngIf="ratingOverviewList">
-  <mat-grid-list cols="2" rowHeight="150px">
-        <mat-grid-tile *ngFor="let list of ratingOverviewList" [colspan]="(isHandset$ | async) ? '2' : '1'" [rowspan]="(isHandset$ | async) ? '1' : '1'">
-          <mat-card class="ratings-card">
-            <mat-card-header>
-              <mat-card-title>
-                    {{(list.moduleRef | doc | async)?.name}}
-                <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                  <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu" xPosition="before">
-                  <button mat-menu-item>Expand</button>
-                  <button mat-menu-item>Remove</button>
-                </mat-menu>
-              </mat-card-title>
-            </mat-card-header>
-            <mat-card-content class="dashboard-card-content">
-              <div> {{list.endedAt.toDate() | date:'medium':'': 'de'}}</div>
-            </mat-card-content>
-          </mat-card>
-        </mat-grid-tile>
-      </mat-grid-list>
-</div>
+<mat-sidenav-container class="sidesheet-container mat-typography">
+  <mat-sidenav #sidesheet position="end" class="sidesheet" [fixedInViewport]="(isHandset$ | async) ? 'false' : 'true'" [fixedTopGap]="(isHandset$ | async) ? '0' : '60'" attr.role="dialog"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="isSidesheetOpen" disableClose="true">
+    <div class="sidesheet-toolbar">
+      <span class="sidesheet-title">Filter</span>
+      <span class="toolbar-spacer"></span>
+      <button mat-icon-button (click)="closeSidesheet()">
+        <mat-icon class="sidesheet-toolbar-icon">close</mat-icon>
+      </button>
+    </div>
+    <div class="sidesheet-content">
+      <mat-form-field appearance="fill">
+        <mat-label>Klasse</mat-label>
+        <mat-select placeholder="Modul" [(ngModel)]="moduleId" (selectionChange)="filterRatingsService.filterByModule($event.value)">
+          <mat-option>Kein Filter</mat-option>
+          <mat-option *ngFor="let module of modulesList" [value]="module.id">
+            {{module.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+  </mat-sidenav>
+  <div *ngIf="ratingOverviewList; let ratings; else loading">
+    <mat-grid-list cols="2" rowHeight="150px">
+      <mat-grid-tile *ngFor="let list of ratings" [colspan]="(isHandset$ | async) ? '2' : '1'" [rowspan]="(isHandset$ | async) ? '1' : '1'">
+        <mat-card class="ratings-card">
+          <mat-card-header>
+            <mat-card-title>
+              {{(list.moduleRef | doc | async)?.name}}
+              <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item>Expand</button>
+                <button mat-menu-item>Remove</button>
+              </mat-menu>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="dashboard-card-content">
+            <div> {{list.endedAt.toDate() | date:'medium':'': 'de'}}</div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <ng-template #loading>
+    <div class="loading-shade">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+</mat-sidenav-container>

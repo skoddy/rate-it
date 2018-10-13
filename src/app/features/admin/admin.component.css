@@ -71,7 +71,18 @@ th {
 .search-field {
   margin-top: 16px;
 }
-
+.loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 tr.row:not(.example-expanded-row):hover {
   background: #f5f5f5;
 }
@@ -102,7 +113,7 @@ tr.row:not(.example-expanded-row):active {
 }
 
 .dashboard-card-content {
-  text-align: center;
+  
 }
 
 .sidesheet-container {

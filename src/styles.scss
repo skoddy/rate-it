@@ -46,7 +46,13 @@ $app-theme: mat-light-theme($app-primary, $app-accent);
   .mat-nav-list a.active-link {
     background-color: mat-color($primary, A700, 0.12);
   }
-
+  tr.row:not(.example-expanded-row):hover {
+    background:mat-color($primary, A700, 0.12);
+  }
+  
+  tr.row:not(.example-expanded-row):active {
+    background: mat-color($primary, A700, 0.24);
+  }
 
 }
 

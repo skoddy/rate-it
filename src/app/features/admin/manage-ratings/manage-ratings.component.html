@@ -32,7 +32,7 @@
   <div *ngIf="ratingOverviewList; let ratings; else loading">
     <mat-grid-list cols="2" rowHeight="150px">
       <mat-grid-tile *ngFor="let list of ratings" [colspan]="(isHandset$ | async) ? '2' : '1'" [rowspan]="(isHandset$ | async) ? '1' : '1'">
-        <mat-card class="ratings-card">
+        <mat-card class="ratings-card" *ngIf="(list.moduleRef | doc | async)?.name && (list.classRef | doc | async)?.name" @flyInOut>
           <mat-card-header>
             <mat-card-title>
               {{(list.moduleRef | doc | async)?.name}}

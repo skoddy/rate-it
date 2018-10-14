@@ -19,13 +19,11 @@
   </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-
-</div>
-<div class="content-container">
-  <mat-form-field class="search-field">
+<button class="add-button" mat-fab (click)="openDialog()" color="accent">
+  <mat-icon>add</mat-icon>
+</button>  <mat-form-field class="search-field">
     <input name="user-search" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
 </div>
-<button class="add-button" mat-fab (click)="openDialog()" color="accent">
-  <mat-icon>add</mat-icon>
-</button>
+
+

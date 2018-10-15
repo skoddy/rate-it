@@ -68,7 +68,7 @@ export class TeacherService {
 
   endRating(id: string) {
     const ratingsCollection = this.db.doc<Rating>(`to_rate/${id}`);
-    return ratingsCollection.update({status: 'ended', endedAt: new Date});
+    return ratingsCollection.update({ status: 'ended', endedAt: new Date });
   }
 
   startRating(teacherId: string, classId: string, moduleId: string, start: Date, end: Date) {
@@ -87,7 +87,16 @@ export class TeacherService {
       status: 'open',
       studentsDone: 0,
       students: [],
-      createdAt: new Date
+      createdAt: new Date,
+      average: {
+        documents: 0,
+        equipment: 0,
+        evaluations: 0,
+        exercises: 0,
+        software: 0,
+        support: 0,
+        working_climate: 0
+      }
     };
     return ratingsCollection.set(ratingsData);
   }

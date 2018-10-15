@@ -54,4 +54,13 @@ export interface Rating {
     students: Array<string>;
     createdAt: Date;
     endedAt?: Date;
+    average?: {
+        documents: number;
+        equipment: number;
+        evaluations: number;
+        exercises: number;
+        software: number;
+        support: number;
+        working_climate: number;
+    }
 }

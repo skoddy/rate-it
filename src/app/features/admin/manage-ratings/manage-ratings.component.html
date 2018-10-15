@@ -30,12 +30,12 @@
     </div>
   </mat-sidenav>
   <div *ngIf="ratingOverviewList; let ratings; else loading">
-    <mat-grid-list cols="2" rowHeight="150px">
+    <mat-grid-list cols="2" rowHeight="250px">
       <mat-grid-tile *ngFor="let list of ratings" [colspan]="(isHandset$ | async) ? '2' : '1'" [rowspan]="(isHandset$ | async) ? '1' : '1'">
-        <mat-card class="ratings-card" *ngIf="(list.moduleRef | doc | async)?.name && (list.classRef | doc | async)?.name" @flyInOut>
+        <mat-card class="ratings-card" *ngIf="(list.moduleRef | doc | async)?.name && (list.classRef | doc | async)?.name && (list.teacherRef | doc | async)?.displayName" @flyInOut>
           <mat-card-header>
             <mat-card-title>
-              {{(list.moduleRef | doc | async)?.name}}
+              {{(list.classRef | doc | async)?.name}}
               <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
                 <mat-icon>more_vert</mat-icon>
               </button>
@@ -44,9 +44,22 @@
                 <button mat-menu-item>Remove</button>
               </mat-menu>
             </mat-card-title>
+            <mat-card-subtitle>
+              {{list.endedAt.toDate() | date:'medium':'': 'de'}}
+            </mat-card-subtitle>
           </mat-card-header>
-          <mat-card-content class="dashboard-card-content">
-            <div> {{list.endedAt.toDate() | date:'medium':'': 'de'}} {{(list.classRef | doc | async)?.name}}</div>
+          <mat-card-content class="rating-overview-card-content">
+            <p>
+                {{(list.moduleRef | doc | async)?.name}} 
+            </p>
+            <p>
+                {{(list.teacherRef | doc | async)?.displayName}}
+            </p>
+            <p>
+                Dokumente: {{list.average.documents}}, Austattung: {{list.average.equipment}}, Auswertung: {{list.average.evaluation}}, Übungen: {{list.average.exercises}}, Software: {{list.average.software}}, Unterstützung: {{list.average.support}}, Klima: {{list.average.working_climate}}
+            </p>
+     <p>Kommentare: 2</p>
+
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>

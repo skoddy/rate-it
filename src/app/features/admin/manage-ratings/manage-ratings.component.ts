@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { FilterRatingsService } from '@app/features/admin/filter-ratings.service';
 import { Modul, Rating, Class } from '@app/data-model';
 import { trigger, state, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
-
+import { Chart } from 'chart.js';
 @Component({
   selector: 'app-manage-ratings',
   templateUrl: './manage-ratings.component.html',
@@ -43,6 +43,7 @@ export class ManageRatingsComponent implements OnInit, OnDestroy {
   modulesList: Modul[];
   classId: string;
   classList: Class[];
+  ratingsSub2: Subscription;
   constructor(
     private adminService: AdminService,
     private breakpointService: BreakpointService,

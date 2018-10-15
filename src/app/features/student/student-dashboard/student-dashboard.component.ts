@@ -38,7 +38,7 @@ export class StudentDashboardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.studentService
-          .saveRating(result)
+          .addRating(result)
           .then(() =>
             console.log('Bewertung gespeichert')
           );

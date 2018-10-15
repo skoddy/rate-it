@@ -34,29 +34,11 @@ export class StudentService implements OnDestroy {
     return this.db.doc(`users/${this.auth.uid}`).ref;
   }
 
-  saveRating(data) {
-    const ratingsCollection = this.afs.doc<SubmittedRating>(`to_rate/${data.id}/ratings/${this.auth.uid}`);
-    const ratingData: SubmittedRating = {
-      studentRef: this.studentRef,
-      documents: data.documents,
-      exercises: data.exercises,
-      software: data.software,
-      support: data.support,
-      evaluations: data.evaluations,
-      working_climate: data.working_climate,
-      equipment: data.equipment,
-      suggestions: data.suggestions
-    };
-
-    return ratingsCollection.set(ratingData).then(() => {
-      this.setStatusDone(data.id);
-      this.increaseRatingsDone(data.id);
-    });
-  }
+ 
 
   setStatusDone(id) {
     const ratingsCollection = this.afs.doc(`to_rate/${id}`);
-    ratingsCollection.set({ students: [this.auth.uid] }, { merge: true });
+    return ratingsCollection.set({ students: [this.auth.uid] }, { merge: true });
   }
 
   increaseRatingsDone(id: string) {
@@ -79,6 +61,66 @@ export class StudentService implements OnDestroy {
       .then(newCount => console.log('Anzahl fertige Bewertungen erhöht: ' + newCount)
       ).catch(err => console.log(err));
   }
+
+
+  addRating(rating) {
+    const toRateDocRef = this.afs.firestore.doc(`to_rate/${rating.id}`);
+    const ratingRef = toRateDocRef.collection(`ratings`).doc(`${this.auth.uid}`);
+    const ratingData: SubmittedRating = {
+      studentRef: this.studentRef,
+      documents: rating.documents,
+      exercises: rating.exercises,
+      software: rating.software,
+      support: rating.support,
+      evaluations: rating.evaluations,
+      working_climate: rating.working_climate,
+      equipment: rating.equipment,
+      suggestions: rating.suggestions
+    };
+    
+    return this.afs.firestore.runTransaction(transaction =>
+
+      transaction.get(toRateDocRef).then(res => {
+
+        // Compute new number of ratings
+        const newNumRatings = res.data().studentsDone + 1;
+
+        // Add this student to the 'students who have done the rating' array
+        let newStudentsArray = [];
+        newStudentsArray = res.data().students;
+        newStudentsArray.push(this.auth.uid);
+
+        // Compute new average ratings
+        const oldRatingTotal = {
+          'documents': (res.data().average.documents * res.data().studentsDone), 
+          'equipment': (res.data().average.equipment * res.data().studentsDone),
+          'evaluations': (res.data().average.evaluations * res.data().studentsDone),
+          'exercises': (res.data().average.exercises * res.data().studentsDone),
+          'software': (res.data().average.software * res.data().studentsDone),
+          'support': (res.data().average.support * res.data().studentsDone),
+          'working_climate': (res.data().average.working_climate * res.data().studentsDone)
+        };
+
+
+        const average = {
+          'documents': (oldRatingTotal.documents + parseInt(rating.documents)) / newNumRatings, 
+          'equipment': (oldRatingTotal.equipment + parseInt(rating.equipment)) / newNumRatings,
+          'evaluations': (oldRatingTotal.evaluations + parseInt(rating.evaluations)) / newNumRatings,
+          'exercises': (oldRatingTotal.exercises + parseInt(rating.exercises)) / newNumRatings,
+          'software': (oldRatingTotal.software + parseInt(rating.software)) / newNumRatings,
+          'support': (oldRatingTotal.support + parseInt(rating.support)) / newNumRatings,
+          'working_climate': (oldRatingTotal.working_climate + parseInt(rating.working_climate)) / newNumRatings,
+        };
+
+        transaction.update(toRateDocRef, { average, studentsDone: newNumRatings, students: newStudentsArray });
+        transaction.set(ratingRef, ratingData);
+        return average;
+
+      }))
+      .then(newCount => console.log('Durchschnitt berechnet: ' + newCount)
+      ).catch(err => console.log(err));
+  }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

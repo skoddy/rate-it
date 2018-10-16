@@ -4,7 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Rating, SubmittedRating, User } from '@app/data-model';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { DatabaseService } from '@app/core/services/database/database.service';
-import { map, take, startWith, scan, tap, filter } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -34,36 +34,73 @@ export class StudentService implements OnDestroy {
     return this.db.doc(`users/${this.auth.uid}`).ref;
   }
 
- 
+
 
   setStatusDone(id) {
     const ratingsCollection = this.afs.doc(`to_rate/${id}`);
     return ratingsCollection.set({ students: [this.auth.uid] }, { merge: true });
   }
-
-  increaseRatingsDone(id: string) {
-    const toRateDocRef = this.afs.firestore.doc(`to_rate/${id}`);
-
-    return this.afs.firestore.runTransaction(transaction =>
-
-      transaction.get(toRateDocRef).then(toRateDoc => {
-
-        const studentsDoneCount = toRateDoc.data().studentsDone + 1;
-
-        if (studentsDoneCount <= 100) {
-          transaction.update(toRateDocRef, { studentsDone: studentsDoneCount });
-          return studentsDoneCount;
-        } else {
-          return Promise.reject('Anzahl der Studenten von 100 überschritten.');
-        }
-
-      }))
-      .then(newCount => console.log('Anzahl fertige Bewertungen erhöht: ' + newCount)
-      ).catch(err => console.log(err));
+  getNewNumOfGrade(res, arr) {
+    let grades = [];
+    grades = res;
+    switch (arr) {
+      case '1':
+        grades[0] = grades[0] + 1
+        break;
+      case '2':
+        grades[1] = grades[1] + 1
+        break;
+      case '3':
+        grades[2] = grades[2] + 1
+        break;
+      case '4':
+        grades[3] = grades[3] + 1
+        break;
+      case '5':
+        grades[4] = grades[4] + 1
+        break;
+      case '6':
+        grades[5] = grades[5] + 1
+        break;
+      default:
+        console.log('switch error');
+        break;
+    }
+    return grades;
   }
 
+  async addRatingTest(rating) {
+    const documentsRef = this.afs.firestore.doc(`to_rate/${rating.id}/statistics/documents`);
+    const exercisesRef = this.afs.firestore.doc(`to_rate/${rating.id}/statistics/exercises`);
+    const softwareRef = this.afs.firestore.doc(`to_rate/${rating.id}/statistics/software`);
+    const supportRef = this.afs.firestore.doc(`to_rate/${rating.id}/statistics/support`);
+    const evaluationsRef = this.afs.firestore.doc(`to_rate/${rating.id}/statistics/evaluations`);
+    const working_climateRef = this.afs.firestore.doc(`to_rate/${rating.id}/statistics/working_climate`);
+    const equipmentRef = this.afs.firestore.doc(`to_rate/${rating.id}/statistics/equipment`);
 
-  addRating(rating) {
+    try {
+      const newCount = await this.afs.firestore.runTransaction(transaction => transaction.get(documentsRef).then(res => {
+        let grades = [];
+        grades = this.getNewNumOfGrade(res.data().grades, rating.documents);
+        transaction.update(documentsRef, { grades });
+        return newCount;
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+    try {
+      const newCount = await this.afs.firestore.runTransaction(transaction => transaction.get(exercisesRef).then(res => {
+        let grades = [];
+        grades = this.getNewNumOfGrade(res.data().grades, rating.exercises);
+        transaction.update(exercisesRef, { grades });
+        return newCount;
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+  async addRating(rating) {
     const toRateDocRef = this.afs.firestore.doc(`to_rate/${rating.id}`);
     const ratingRef = toRateDocRef.collection(`ratings`).doc(`${this.auth.uid}`);
     const ratingData: SubmittedRating = {
@@ -77,22 +114,18 @@ export class StudentService implements OnDestroy {
       equipment: rating.equipment,
       suggestions: rating.suggestions
     };
-    
-    return this.afs.firestore.runTransaction(transaction =>
 
-      transaction.get(toRateDocRef).then(res => {
-
+    try {
+      const newCount = await this.afs.firestore.runTransaction(transaction => transaction.get(toRateDocRef).then(res => {
         // Compute new number of ratings
         const newNumRatings = res.data().studentsDone + 1;
-
         // Add this student to the 'students who have done the rating' array
         let newStudentsArray = [];
         newStudentsArray = res.data().students;
         newStudentsArray.push(this.auth.uid);
-
         // Compute new average ratings
         const oldRatingTotal = {
-          'documents': (res.data().average.documents * res.data().studentsDone), 
+          'documents': (res.data().average.documents * res.data().studentsDone),
           'equipment': (res.data().average.equipment * res.data().studentsDone),
           'evaluations': (res.data().average.evaluations * res.data().studentsDone),
           'exercises': (res.data().average.exercises * res.data().studentsDone),
@@ -101,9 +134,8 @@ export class StudentService implements OnDestroy {
           'working_climate': (res.data().average.working_climate * res.data().studentsDone)
         };
 
-
         const average = {
-          'documents': (oldRatingTotal.documents + parseInt(rating.documents)) / newNumRatings, 
+          'documents': (oldRatingTotal.documents + parseInt(rating.documents)) / newNumRatings,
           'equipment': (oldRatingTotal.equipment + parseInt(rating.equipment)) / newNumRatings,
           'evaluations': (oldRatingTotal.evaluations + parseInt(rating.evaluations)) / newNumRatings,
           'exercises': (oldRatingTotal.exercises + parseInt(rating.exercises)) / newNumRatings,
@@ -111,14 +143,15 @@ export class StudentService implements OnDestroy {
           'support': (oldRatingTotal.support + parseInt(rating.support)) / newNumRatings,
           'working_climate': (oldRatingTotal.working_climate + parseInt(rating.working_climate)) / newNumRatings,
         };
-
         transaction.update(toRateDocRef, { average, studentsDone: newNumRatings, students: newStudentsArray });
         transaction.set(ratingRef, ratingData);
         return average;
-
-      }))
-      .then(newCount => console.log('Durchschnitt berechnet: ' + newCount)
-      ).catch(err => console.log(err));
+      }));
+      return console.log('Durchschnitt berechnet: ' + newCount);
+    }
+    catch (err) {
+      return console.log(err);
+    }
   }
 
   ngOnDestroy() {

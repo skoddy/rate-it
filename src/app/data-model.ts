@@ -62,5 +62,14 @@ export interface Rating {
         software: number;
         support: number;
         working_climate: number;
-    }
+    };
+    
+    grades?: {
+        one: number;
+        two: number;
+        three: number;
+        four: number;
+        five: number;
+        six: number;
+    };
 }

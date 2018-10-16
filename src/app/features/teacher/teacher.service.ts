@@ -96,7 +96,14 @@ export class TeacherService {
         software: 0,
         support: 0,
         working_climate: 0
-      }
+      },
+      r_documents: [0, 0, 0, 0, 0, 0, 0],
+      r_equipment: [0, 0, 0, 0, 0, 0, 0],
+      r_evaluations: [0, 0, 0, 0, 0, 0, 0],
+      r_exercises: [0, 0, 0, 0, 0, 0, 0],
+      r_software: [0, 0, 0, 0, 0, 0, 0],
+      r_support: [0, 0, 0, 0, 0, 0, 0],
+      r_working_climate: [0, 0, 0, 0, 0, 0, 0],
     };
     return ratingsCollection.set(ratingsData);
   }

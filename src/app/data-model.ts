@@ -63,7 +63,13 @@ export interface Rating {
         support: number;
         working_climate: number;
     };
-    
+    r_documents: [number, number, number, number, number, number, number];
+    r_equipment: [number, number, number, number, number, number, number];
+    r_evaluations: [number, number, number, number, number, number, number];
+    r_exercises: [number, number, number, number, number, number, number];
+    r_software: [number, number, number, number, number, number, number];
+    r_support: [number, number, number, number, number, number, number];
+    r_working_climate: [number, number, number, number, number, number, number];
     grades?: {
         one: number;
         two: number;

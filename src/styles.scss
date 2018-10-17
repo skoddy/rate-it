@@ -24,9 +24,7 @@ $app-theme: mat-light-theme($app-primary, $app-accent);
   $primary: map-get($app-theme, primary);
   $accent: map-get($app-theme, accent);
 
-  .login-background {
-    background-color: mat-color($primary);
-  }
+
   .header {
     background-color: mat-color($primary);
   }

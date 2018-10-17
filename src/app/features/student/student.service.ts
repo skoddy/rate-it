@@ -41,34 +41,34 @@ export class StudentService implements OnDestroy {
     return ratingsCollection.set({ students: [this.auth.uid] }, { merge: true });
   }
   getNewNumOfGrade(grades, arr) {
-    console.log(grades);
+    console.log('grades vor berechnung: ' + grades);
     console.log(arr);
 
 
     switch (arr) {
       case '1':
-        grades[1] = grades[1] + 1;
+        grades[0] = grades[0] + 1;
         break;
       case '2':
-        grades[2] = grades[2] + 1;
+        grades[1] = grades[1] + 1;
         break;
       case '3':
-        grades[3] = grades[3] + 1;
+        grades[2] = grades[2] + 1;
         break;
       case '4':
-        grades[4] = grades[4] + 1;
+        grades[3] = grades[3] + 1;
         break;
       case '5':
-        grades[5] = grades[5] + 1;
+        grades[4] = grades[4] + 1;
         break;
       case '6':
-        grades[6] = grades[6] + 1;
+        grades[5] = grades[5] + 1;
         break;
       default:
         console.log('switch error');
         break;
     }
-    console.log(grades);
+    console.log('grades nach berechnung: ' + grades);
     return grades;
   }
 
@@ -91,38 +91,77 @@ export class StudentService implements OnDestroy {
 
     try {
       const newCount = await this.afs.firestore.runTransaction(transaction => transaction.get(toRateDocRef).then(res => {
+
         // Compute new number of ratings
         const newNumRatings = res.data().studentsDone + 1;
+
         // Get the students array and
         // push this student to the 'students who have done the rating' array
         let newStudentsArray = [];
         newStudentsArray = res.data().students;
         newStudentsArray.push(this.auth.uid);
 
-        const newRatingStats = {
-          r_documents:  res.data().r_documents
-        };
+        let oldDocumentsArray = res.data().r_documents;
+        let oldEquipmentArray = res.data().r_equipment;
+        let oldEvaluationsArray = res.data().r_evaluations;
+        let oldExercisesArray = res.data().r_exercises;
+        let oldSoftwareArray = res.data().r_software;
+        let oldSupportArray = res.data().r_support;
+        let oldWorkingClimateArray = res.data().r_working_climate;
 
-        // Compute new average ratings
-        const oldRatingTotal = [
-          newRatingStats.r_documents * res.data().studentsDone,
-          res.data().r_equipment[0] * res.data().studentsDone,
-          res.data().r_evaluations[0] * res.data().studentsDone,
-          res.data().r_exercises[0] * res.data().studentsDone,
-          res.data().r_software[0] * res.data().studentsDone,
-          res.data().r_support[0] * res.data().studentsDone,
-          res.data().r_working_climate[0] * res.data().studentsDone
-        ];
-        newRatingStats.r_documents[0] = (oldRatingTotal[0] + parseInt(rating.documents, 10)) / newNumRatings;
-newRatingStats.r_documents = newRatingStats.r_documents.concat(this.getNewNumOfGrade(res.data().r_documents, rating.documents));
+        oldDocumentsArray[0] = [res.data().r_documents[0] * res.data().studentsDone];
+        oldEquipmentArray[0] = [res.data().r_equipment[0] * res.data().studentsDone];
+        oldEvaluationsArray[0] = [res.data().r_evaluations[0] * res.data().studentsDone];
+        oldExercisesArray[0] = [res.data().r_exercises[0] * res.data().studentsDone];
+        oldSoftwareArray[0] = [res.data().r_software[0] * res.data().studentsDone];
+        oldSupportArray[0] = [res.data().r_support[0] * res.data().studentsDone];
+        oldWorkingClimateArray[0] = [res.data().r_working_climate[0] * res.data().studentsDone];
 
+        const newDocumentsAverage = [(parseInt((oldDocumentsArray[0]), 10) + parseInt(rating.documents, 10)) / newNumRatings];
+        const newEquipmentAverage = [(parseInt((oldEquipmentArray[0]), 10) + parseInt(rating.equipment, 10)) / newNumRatings];
+        const newEvaluationsAverage = [(parseInt((oldEvaluationsArray[0]), 10) + parseInt(rating.evaluations, 10)) / newNumRatings];
+        const newExercisesAverage = [(parseInt((oldExercisesArray[0]), 10) + parseInt(rating.exercises, 10)) / newNumRatings];
+        const newSoftwareAverage = [(parseInt((oldSoftwareArray[0]), 10) + parseInt(rating.software, 10)) / newNumRatings];
+        const newSupportAverage = [(parseInt((oldSupportArray[0]), 10) + parseInt(rating.support, 10)) / newNumRatings];
+        const newWorkingClimateAverage = [(parseInt((oldWorkingClimateArray[0]), 10) + parseInt(rating.working_climate, 10)) / newNumRatings];
 
-console.log(newRatingStats.r_documents);
+        oldDocumentsArray.shift();
+        oldEquipmentArray.shift();
+        oldEvaluationsArray.shift();
+        oldExercisesArray.shift();
+        oldSoftwareArray.shift();
+        oldSupportArray.shift();
+        oldWorkingClimateArray.shift();
+
+        const documentsGradesArray = this.getNewNumOfGrade(oldDocumentsArray, rating.documents);
+        const equipmentGradesArray = this.getNewNumOfGrade(oldEquipmentArray, rating.equipment);
+        const evaluationsGradesArray = this.getNewNumOfGrade(oldEvaluationsArray, rating.evaluations);
+        const exercisesGradesArray = this.getNewNumOfGrade(oldExercisesArray, rating.exercises);
+        const softwareGradesArray = this.getNewNumOfGrade(oldSoftwareArray, rating.software);
+        const supportGradesArray = this.getNewNumOfGrade(oldSupportArray, rating.support);
+        const wokingClimateGradesArray = this.getNewNumOfGrade(oldWorkingClimateArray, rating.working_climate);
+
+        const calculatedDocumentsArray = newDocumentsAverage.concat(documentsGradesArray);
+        const calculatedEquipmentArray = newEquipmentAverage.concat(equipmentGradesArray);
+        const calculatedEvaluationsArray = newEvaluationsAverage.concat(evaluationsGradesArray);
+        const calculatedExercisesArray = newExercisesAverage.concat(exercisesGradesArray);
+        const calculatedSoftwareArray = newSoftwareAverage.concat(softwareGradesArray);
+        const calculatedSupportArray = newSupportAverage.concat(supportGradesArray);
+        const calculatedWorkingClimateArray = newWorkingClimateAverage.concat(wokingClimateGradesArray);
 
         transaction.update(toRateDocRef, {
-          r_documents: newRatingStats.r_documents, studentsDone: newNumRatings, students: newStudentsArray });
+          r_documents: calculatedDocumentsArray,
+          r_equipment: calculatedEquipmentArray,
+          r_evaluations: calculatedEvaluationsArray,
+          r_exercises: calculatedExercisesArray,
+          r_software: calculatedSoftwareArray,
+          r_support: calculatedSupportArray,
+          r_working_climate: calculatedWorkingClimateArray,
+          studentsDone: newNumRatings,
+          students: newStudentsArray
+        });
         transaction.set(ratingRef, ratingData);
-        return newRatingStats;
+        return calculatedDocumentsArray;
       }));
       return console.log('Durchschnitt berechnet: ' + newCount);
     } catch (err) {

@@ -13,7 +13,7 @@ body {
 
 @include mat-core();
 
-$app-primary: mat-palette($mat-light-blue);
+$app-primary: mat-palette($mat-orange, 900);
 $app-accent: mat-palette($mat-amber, A200, A100, A400);
 
 $app-theme: mat-light-theme($app-primary, $app-accent);

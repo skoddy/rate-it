@@ -6,6 +6,7 @@ import { AdminDashboardComponent } from '@app/features/admin/admin-dashboard/adm
 import { ManageClassesComponent } from '@app/features/admin/manage-classes/manage-classes.component';
 import { ManageModulesComponent } from '@app/features/admin/manage-modules/manage-modules.component';
 import { ManageRatingsComponent } from '@app/features/admin/manage-ratings/manage-ratings.component';
+import { RatingsListComponent } from './manage-ratings/ratings-list/ratings-list.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: AdminDashboardComponent },
       { path: 'ratings', component: ManageRatingsComponent },
+      { path: 'ratings/:id', component: RatingsListComponent },
       { path: 'users', component: ManageUsersComponent },
       { path: 'classes', component: ManageClassesComponent },
       { path: 'modules', component: ManageModulesComponent }

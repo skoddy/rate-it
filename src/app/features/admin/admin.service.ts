@@ -30,6 +30,11 @@ export class AdminService {
   getRatingOverviewList(): Observable<any> {
     return this.db.colWithIds$('to_rate', ref => ref.where('status', '==', 'ended'));
   }
+
+  getRatingDetailList(id): Observable<any> {
+    return this.db.doc$(`to_rate/${id}`);
+  }
+
   getUsers(): Observable<User[]> {
     return this.userCollection.snapshotChanges().pipe(
       map(actions => {

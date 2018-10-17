@@ -12,6 +12,7 @@ import { ManageRatingsComponent } from './manage-ratings/manage-ratings.componen
 import { NewUserComponent } from '@app/features/admin/manage-users/new-user/new-user.component';
 import { NewModulComponent } from '@app/features/admin/manage-modules/new-modul/new-modul.component';
 import { NewClassComponent } from '@app/features/admin/manage-classes/new-class/new-class.component';
+import { RatingsListComponent } from './manage-ratings/ratings-list/ratings-list.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { NewClassComponent } from '@app/features/admin/manage-classes/new-class/
     ManageClassesComponent,
     ManageModulesComponent,
     ManageRatingsComponent,
-    NewModulComponent
+    NewModulComponent,
+    RatingsListComponent
   ],
   entryComponents: [NewUserComponent, NewClassComponent, NewModulComponent]
 })
